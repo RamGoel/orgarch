@@ -16,7 +16,6 @@ export default function Navbar() {
             <li><a href="">CONTACT</a></li>
           </ul>
         </div>
-        <i class="fa fa-bars" onclick="showMenu()"></i>
       </nav>
 
       <div class="text-box">
