@@ -1,9 +1,40 @@
 input{
   display: block;
-  padding: 5px;
-  margin:10px 0px
+  padding: 10px;
+  margin:10px 0px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  width: 92%;
 }
 
+form{
+  width: 500px;
+  margin: auto;
+  text-align: center;
+}
+
+button>a{
+  color: white;
+  text-decoration: none;
+}
+
+button{
+  padding: 10px;
+  width: 100%;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  border: none;
+}
+
+table{
+  padding: 10px;
+}
+td, th{
+  width: 18vw;
+  text-align: center;
+  border: .5px solid black ;
+}
 /* ------------------ for navbar -------------- */
 .header {
   min-height: 100vh;

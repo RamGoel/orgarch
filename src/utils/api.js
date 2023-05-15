@@ -1,7 +1,7 @@
 import { auth, db, storageRef } from "./firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { checkValidObj, generateKey, getErrMessage } from "./plugins";
-import { getDoc, setDoc, doc, getDocs, collection, query, updateDoc } from "firebase/firestore";
+import { getDoc, setDoc, doc, getDocs, collection, query, updateDoc, where } from "firebase/firestore";
 import { storage } from "./firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
@@ -48,20 +48,20 @@ export const reviewerSignup = (data, handler, errHandler) => {
 
     createUserWithEmailAndPassword(auth, data.email, data.password).then(result => {
         const docRef = doc(db, 'users', data.email)
-        setDoc(docRef, { ...data, role: 'reviewer' }).then(res => handler(res)).catch(err => {
+        setDoc(docRef, { ...data, role: 'reviewer', assigned: null }).then(res => handler(res)).catch(err => {
             alert(err.message)
         })
     }).catch(err => errHandler(err))
 }
 export const getAllConferences = async (handler, errHandler) => {
+    var allConferences = []
     const q = query(collection(db, "conferences"));
     await getDocs(q).then(querySnapshot => {
-        var allConferences = []
         querySnapshot.forEach((doc) => {
             allConferences.push(doc.data())
         })
-        handler(allConferences)
     }).catch(err => errHandler(err))
+    handler(allConferences)
 }
 export const addNewConference = async (data, handler, errHandler) => {
 
@@ -88,7 +88,8 @@ export const getConferenceById = async (id, handler, errHandler) => {
     })
 
 }
-export const submitPaper = (id, newPaper, handler, errHandler) => {
+export const submitPaper = (confId, newPaper, handler, errHandler) => {
+    var paperId = generateKey()
     var urlOfPaper = '';
     var storageRef = ref(storage, newPaper.title)
 
@@ -109,9 +110,12 @@ export const submitPaper = (id, newPaper, handler, errHandler) => {
                 urlOfPaper = downloadURL
             });
 
-            const docRef = doc(db, 'conferences', id)
+
+            const docRef = doc(db, 'conferences', confId)
             getDoc(docRef).then(res => {
-                updateDoc(docRef, { papers: [...res.data().papers, { ...newPaper, file: urlOfPaper }] }).then(res => {
+                const updatedAllPapers = { ...res.data().papers }
+                updatedAllPapers[paperId] = { ...newPaper, file: urlOfPaper, id: paperId, confId: confId }
+                updateDoc(docRef, {papers:updatedAllPapers}).then(res => {
                     handler(res)
                 }).catch(err => {
                     errHandler(err)
@@ -127,17 +131,59 @@ export const submitPaper = (id, newPaper, handler, errHandler) => {
 export const enableCallForPapers = async (id, handler, errHandler) => {
     const docRef = doc(db, 'conferences', id)
     await updateDoc(docRef, {
-        papers: []
+        papers: {}
     }).then(res => {
         handler(res)
     }).catch(err => {
         errHandler(getErrMessage(err))
     })
 }
-export const getPapersById=async (id, handler, errHandler)=>{
-    const docRef=doc(db, 'conferences', id)
+export const getPapersById = async (id, handler, errHandler) => {
+    const docRef = doc(db, 'conferences', id)
 
-    getDoc(docRef).then(result=>{
+    getDoc(docRef).then(result => {
         handler(result.data())
-    }).catch(err=>errHandler(getErrMessage(err)))
+    }).catch(err => errHandler(getErrMessage(err)))
+}
+export const getAllReviewer = async (handler, errHandler) => {
+    const q = query(collection(db, "users"), where('role', '==', 'reviewer'));
+    await getDocs(q).then(querySnapshot => {
+        var allReviewers = []
+        querySnapshot.forEach((doc) => {
+            allReviewers.push(doc.data())
+        })
+        handler(allReviewers)
+    }).catch(err => errHandler(getErrMessage(err)))
+}
+export const assignReviewer = async (email, paperId, confId, handler, errHandler) => {
+    const docRef = doc(db, 'conferences', confId)
+    getDoc(docRef).then(res => {
+        var allPapers = res.data().papers
+        allPapers[paperId] = { ...allPapers[paperId], assigned: email }
+        updateDoc(docRef, allPapers).then(res => {
+            handler(res)
+        }).catch(err => errHandler(getErrMessage(err)))
+    })
+
+}
+export const getAssignedPaper = async (email, handler, errHandler) => {
+    var assignedPapers = []
+    const q = query(collection(db, "conferences"));
+    await getDocs(q).then(querySnapshot => {
+        var allConferences = []
+        querySnapshot.forEach((doc) => {
+            allConferences.push(doc.data())
+        })
+
+        allConferences.map(element => {
+            if(element.papers!==false){
+                element.papers.map(e => {
+                    if (e.assigned === email) {
+                        assignedPapers.push(e)
+                    }
+                })
+            }
+        })
+        handler(assignedPapers)
+    }).catch(err => errHandler(getErrMessage(err)))
 }

@@ -14,6 +14,7 @@ function Login() {
   if (loading) { return <Loader /> }
   return (
     <div className="login">
+      <img src="https://www.claymath.org/sites/default/files/img_3093_0.jpg" width={'50%'} alt="" />
       <form onSubmit={e => {
         e.preventDefault()
         setLoading(true)

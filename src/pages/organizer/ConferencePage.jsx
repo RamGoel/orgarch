@@ -4,8 +4,10 @@ import { enableCallForPapers, getConferenceById } from '../../utils/api'
 import Loader from '../../components/Loader'
 import NotFoundPage from '../../components/NotFound'
 import { appUrl } from '../../utils/plugins'
+import { useSelector } from 'react-redux'
 function ConferencePage() {
     const { id } = useParams()
+    const role = useSelector(state => state.auth.role)
     const [isAvailable, setAvailable] = useState('')
     const [data, setData] = useState({ fill: true })
     const [loading, setLoading] = useState(false)
@@ -26,38 +28,37 @@ function ConferencePage() {
             alert(err)
             setLoading(false)
         })
-    })
+    },[])
 
     if (isAvailable === false) {
         return <NotFoundPage />
     }
 
-    // if (loading) {
-    //     return <Loader />
-    // }
+    if (loading) {
+        return <Loader />
+    }
 
     return (
         <div>
             <p>Welcome to {data.title || ''} Conference</p>
-            {data.papers!==false?<p>Submission Link - <a href={`${appUrl}/conference/${data.key}/submit`}>Click Here</a></p>:''}
+            {data.papers !== false ? <p>Submission Link - <a href={`${appUrl}/conference/${data.key}/submit`}>Click Here</a></p> : ''}
             <ol>
                 {Object.keys(data).map(pair => {
                     return pair !== 'papers' ? <li>{pair} - {data[pair]}</li> : ''
                 })}
             </ol>
             {
-                data.papers === false ? <button onClick={() => {
+                data.papers === false ? <button disabled={role === 'reviewer'} onClick={() => {
                     var isEnable = window.confirm("Do you want to Enable Call for Papers?")
                     if (isEnable) {
                         enableCallForPapers(id, (res) => {
-                            alert("Successfully Activated")
                             window.location.reload()
                         }, err => {
                             alert(err)
                         })
                     }
-                }}>Call for Papers <i className='fa fa-lock'></i></button> : <button onClick={() => {
-                    navigate(`/conference/${id}/papers`, {id:id})
+                }}>{(role === 'reviewer') ? 'Call for Papers' : 'Open Call for Papers'} <i className='fa fa-lock'></i></button> : <button onClick={() => {
+                    navigate(`/conference/${id}/papers`, { id: id })
                 }}>View Papers <i className='fa fa-angle-right'></i></button>
             }
 
