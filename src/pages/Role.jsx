@@ -4,10 +4,12 @@ import '../App.css'
 
 import conf from '../assets/image.png'
 import person from '../assets/person.png'
+import Navbar from '../components/Navbar'
 
 function Role() {
     return (
         <>
+        <Navbar/>
         <section class="facilities">
             <h1 className='landingPageHeading'>Who are you ? </h1>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur reiciendis quidem voluptate officiis modi? Nulla rerum deleniti quos distinctio perspiciatis facere accusamus molestias.</p>
