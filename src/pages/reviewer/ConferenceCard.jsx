@@ -11,13 +11,10 @@ function ConferenceCard({ data }) {
                 <p><i className='fa fa-calendar'></i>{data.date}</p>
                 <p><i className='fa fa-location'></i>{data.venue}</p>
             </div>
-            {
-                data.papers === false
-                    ? <button disabled={true}>Call for Papers <i className='fa fa-lock'></i></button>
-                    : <button onClick={() => {
-                        navigate(`/conference/${data.key}/papers`, { id: data.key })
-                    }}>View Papers <i className='fa fa-angle-right'></i></button>
-            }
+            <button onClick={() => {
+                navigate(`/conference/${data.key}`, { id: data.key })
+            }}>View Conference <i className='fa fa-angle-right'></i></button>
+
         </div>
     )
 }

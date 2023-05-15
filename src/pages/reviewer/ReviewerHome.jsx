@@ -16,7 +16,6 @@ function ReviewerHome() {
       </div>
 
 
-      {/* <p>Welcome, {user.displayName || user.name} </p> */}
       {
         tab ? <AllConferences /> : <AssignedPapers />
       }
