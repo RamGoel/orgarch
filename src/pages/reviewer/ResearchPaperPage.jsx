@@ -1,6 +1,6 @@
 import React from 'react'
-import '../App.css'
-import conf from '../assets/person.png'
+import '../../App.css'
+import conf from '../../assets/person.png'
 
 
 export default function ResearchPaperPage() {

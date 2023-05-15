@@ -1,9 +1,9 @@
 import { auth, db } from "./firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { checkValidObj } from "./plugins";
-import { getDoc, setDoc, doc } from "firebase/firestore";
+import { checkValidObj, generateKey } from "./plugins";
+import { getDoc, setDoc, doc, getDocs, collection, query } from "firebase/firestore";
 
-export const loginUser = (data, handler) => {
+export const loginUser = (data, handler, errHandler) => {
 
     if (checkValidObj(data) === false) {
         alert("All Fields are compulsory.")
@@ -20,14 +20,10 @@ export const loginUser = (data, handler) => {
             auth.signOut()
             alert("User Doesn't exists.")
         }
-    }).catch(err => {
-        var msg = err.message.split('/')
-        alert(msg[msg.length - 1])
-        return false;
-    })
+    }).catch(err => errHandler(err))
 
 }
-export const organizerSignup = (data) => {
+export const organizerSignup = (data, handler, errHandler) => {
     if (checkValidObj(data) === false) {
         alert("All Fields are compulsory.")
         return;
@@ -35,18 +31,12 @@ export const organizerSignup = (data) => {
 
     createUserWithEmailAndPassword(auth, data.email, data.password).then(result => {
         const docRef = doc(db, 'users', data.email)
-        setDoc(docRef, { ...data, role: 'organizer' }).then(res => {
-            console.log(res)
-            return "success";
-        }).catch(err => {
+        setDoc(docRef, { ...data, role: 'organizer' }).then(res => handler(res)).catch(err => {
             alert(err.message)
         })
-    }).catch(err => {
-        var msg = err.message.split('/')
-        alert(msg[msg.length - 1])
-    })
+    }).catch(err => errHandler(err))
 }
-export const reviewerSignup = (data) => {
+export const reviewerSignup = (data, handler, errHandler) => {
     if (checkValidObj(data) === false) {
         alert("All Fields are compulsory.")
         return;
@@ -54,15 +44,31 @@ export const reviewerSignup = (data) => {
 
     createUserWithEmailAndPassword(auth, data.email, data.password).then(result => {
         const docRef = doc(db, 'users', data.email)
-        setDoc(docRef, { ...data, role: 'reviewer' }).then(res => {
-            console.log(res)
-            return "success";
-        }).catch(err => {
+        setDoc(docRef, { ...data, role: 'reviewer' }).then(res => handler(res)).catch(err => {
             alert(err.message)
         })
-    }).catch(err => {
-        var msg = err.message.split('/')
-        alert(msg[msg.length - 1])
-    })
+    }).catch(err => errHandler(err))
 }
 
+export const getAllConferences = async ( handler, errHandler) => {
+    const q = query(collection(db, "cities"));
+    await getDocs(q).then(querySnapshot => {
+        var allConferences = []
+        querySnapshot.forEach((doc) => {
+            allConferences.push(doc.data())
+        })
+        handler(allConferences)
+    }).catch(err => errHandler(err))
+}
+export const addNewConference=async(data, handler, errHandler)=>{
+
+    if (checkValidObj(data) === false) {
+        alert("All Fields are compulsory.")
+        return;
+    }    
+    
+    const key=generateKey()
+    const docRef=doc(db, 'conferences', key)
+
+    setDoc(docRef, data).then(res=>handler(res)).catch(err=>errHandler(err))
+}

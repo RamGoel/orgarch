@@ -1,11 +1,12 @@
-import Role from '../pages/Role';
-import Login from '../pages/Login';
+import Role from '../pages/auth/Role';
+import Login from '../pages/auth/Login';
 import { createBrowserRouter } from 'react-router-dom';
-import ReviewerSignup from '../pages/ReviewerSignup';
-import OrganizerSignup from '../pages/OrganizerSignup';
-import OrganizerHome from '../pages/OrganizerHome';
-import ReviewerHome from '../pages/ReviewerHome';
-import ResearchPaperPage from '../pages/ResearchPaperPage';
+import ReviewerSignup from '../pages/auth/ReviewerSignup';
+import OrganizerSignup from '../pages/auth/OrganizerSignup';
+import OrganizerHome from '../pages/organizer/OrganizerHome';
+import ReviewerHome from '../pages/reviewer/ReviewerHome';
+import ResearchPaperPage from '../pages/reviewer/ResearchPaperPage';
+import NewConference from '../pages/organizer/NewConference';
 
 export const Router = createBrowserRouter([
     {
@@ -35,6 +36,10 @@ export const Router = createBrowserRouter([
     {
         element: <ResearchPaperPage />,
         path: '/reviewer/page'
+    },
+    {
+        element: <NewConference />,
+        path: '/organizer/addconference'
     },
 
 ])

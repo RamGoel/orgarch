@@ -7,7 +7,7 @@ export default function Navbar() {
       <nav>
         <h2>LOGO</h2>
         <div class="nav-links" id="navLinks">
-          <i class="fa fa-times" onclick="hideMenu()"></i>
+          <i class="fa fa-times" onClick="hideMenu()"></i>
           <ul>
             <li><a href="">HOME</a></li>
             <li><a href="">ABOUT</a></li>
@@ -21,7 +21,7 @@ export default function Navbar() {
       <div class="text-box">
         <h1>Research Paper Review</h1>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, esse.</p>
-        <a href='heh' class="hero-btn">Scroll down to explore</a>
+        <a href='#role' class="hero-btn">Scroll down to explore</a>
       </div>
     </section>
     </div>
