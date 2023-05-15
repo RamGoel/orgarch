@@ -15,7 +15,8 @@ function ReviewerSignup() {
 
     return (
 
-        <form onSubmit={(e) =>{
+        <div className="reviewerSignup">
+            <form onSubmit={(e) =>{
             e.preventDefault()
             handleSubmit()
         }}>
@@ -50,6 +51,7 @@ function ReviewerSignup() {
 
             <button type='submit' disabled={!((form.password) && form.confirmpwd && form.password === form.confirmpwd)}>Submit</button>
         </form>
+        </div>
     )
 }
 

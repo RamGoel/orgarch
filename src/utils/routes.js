@@ -5,6 +5,7 @@ import ReviewerSignup from '../pages/ReviewerSignup';
 import OrganizerSignup from '../pages/OrganizerSignup';
 import OrganizerHome from '../pages/OrganizerHome';
 import ReviewerHome from '../pages/ReviewerHome';
+import ResearchPaperPage from '../pages/ResearchPaperPage';
 
 export const Router = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ export const Router = createBrowserRouter([
     {
         element: <ReviewerHome />,
         path: '/reviewer/home'
+    },
+    {
+        element: <ResearchPaperPage />,
+        path: '/reviewer/page'
     },
 
 ])
