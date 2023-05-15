@@ -28,6 +28,7 @@ function ConferencePage() {
             alert(err)
             setLoading(false)
         })
+    // eslint-disable-next-line
     },[])
 
     if (isAvailable === false) {

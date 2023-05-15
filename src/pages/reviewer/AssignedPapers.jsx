@@ -18,7 +18,7 @@ function AssignedPapers() {
         })
     })
     return (
-        (papers[0] == true) ? <Loader /> : <div>
+        (papers[0] === true) ? <Loader /> : <div>
             {
                 papers.length>0?papers.map(obj => {
                     return <PaperCard paper={obj} />

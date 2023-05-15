@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { addNewConference } from '../../utils/api'
-import { appUrl, getErrMessage } from '../../utils/plugins'
+import { getErrMessage } from '../../utils/plugins'
 import { useNavigate } from 'react-router'
 import { useSelector } from 'react-redux'
 
@@ -8,7 +8,6 @@ function NewConference() {
   const [form, setForm] = useState({})
   const user = useSelector(state => state.auth.user)
   const [loading, setLoading] = useState(false)
-  const [url, setURL] = useState(null)
   const navigate = useNavigate()
   return (
     <form onSubmit={e => {
@@ -27,7 +26,6 @@ function NewConference() {
       })
     }}>
 
-      <a href={url}>{url}</a>
       <h3>Add New Conference</h3>
       <input required={true} type="text" placeholder='Conference Title' onChange={e => {
         setForm({ ...form, title: e.target.value })

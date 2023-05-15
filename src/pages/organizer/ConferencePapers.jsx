@@ -30,7 +30,7 @@ function ConferencePapers() {
             setLoading(false)
         })
 
-
+// eslint-disable-next-line
     }, [])
     return (
         loading ? <Loader /> : Object.values(data).length ? <table>

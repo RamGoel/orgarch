@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { getConferencesByEmail } from '../../utils/api'
 import { useSelector } from 'react-redux'
 import { getErrMessage } from '../../utils/plugins'
+import Loader from '../../components/Loader'
 
 function OrganizerHome() {
   const [data, setData] = useState([])
@@ -17,9 +18,10 @@ function OrganizerHome() {
       alert(getErrMessage(err))
       setLoading(false)
     })
+  // eslint-disable-next-line
   }, [])
   return (
-    <div>
+    loading ? <Loader /> : <div>
       <button><Link to={'/organizer/addconference'}>Add New Conference</Link></button>
       <div>
         <p>Your Conferences</p>

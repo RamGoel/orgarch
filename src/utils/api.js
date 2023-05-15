@@ -1,4 +1,4 @@
-import { auth, db, storageRef } from "./firebase";
+import { auth, db } from "./firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { checkValidObj, generateKey, getErrMessage } from "./plugins";
 import { getDoc, setDoc, doc, getDocs, collection, query, updateDoc, where } from "firebase/firestore";
@@ -175,9 +175,10 @@ export const getAssignedPaper = async (email, handler, errHandler) => {
         querySnapshot.forEach((doc) => {
             allConferences.push(doc.data())
         })
-
+// eslint-disable-next-line
         allConferences.map(element => {
             if(element.papers!==false){
+                // eslint-disable-next-line
                 element.papers.map(e => {
                     if (e.assigned === email) {
                         assignedPapers.push(e)
