@@ -8,13 +8,13 @@ export default function Navbar() {
         <h2>LOGO</h2>
         <div class="nav-links" id="navLinks">
           <i class="fa fa-times" onClick="hideMenu()"></i>
-          <ul>
+          {/* <ul>
             <li><a href="">HOME</a></li>
             <li><a href="">ABOUT</a></li>
             <li><a href="">COURSE</a></li>
             <li><a href="">BLOG</a></li>
             <li><a href="">CONTACT</a></li>
-          </ul>
+          </ul> */}
         </div>
       </nav>
 
