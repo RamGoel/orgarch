@@ -1,6 +1,6 @@
 import { auth, db } from "./firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { checkValidObj, generateKey } from "./plugins";
+import { checkValidObj, generateKey, getErrMessage } from "./plugins";
 import { getDoc, setDoc, doc, getDocs, collection, query } from "firebase/firestore";
 
 export const loginUser = (data, handler, errHandler) => {
@@ -50,7 +50,7 @@ export const reviewerSignup = (data, handler, errHandler) => {
     }).catch(err => errHandler(err))
 }
 
-export const getAllConferences = async ( handler, errHandler) => {
+export const getAllConferences = async (handler, errHandler) => {
     const q = query(collection(db, "cities"));
     await getDocs(q).then(querySnapshot => {
         var allConferences = []
@@ -60,15 +60,30 @@ export const getAllConferences = async ( handler, errHandler) => {
         handler(allConferences)
     }).catch(err => errHandler(err))
 }
-export const addNewConference=async(data, handler, errHandler)=>{
+export const addNewConference = async (data, handler, errHandler) => {
 
     if (checkValidObj(data) === false) {
         alert("All Fields are compulsory.")
         return;
-    }    
-    
-    const key=generateKey()
-    const docRef=doc(db, 'conferences', key)
+    }
 
-    setDoc(docRef, data).then(res=>handler(res)).catch(err=>errHandler(err))
+    const key = generateKey()
+    const docRef = doc(db, 'conferences', key)
+
+    setDoc(docRef, data).then(res => handler(res, key)).catch(err => errHandler(err))
+}
+
+
+export const getConferenceById = async (id, handler, errHandler) => {
+    const docRef = doc(db, 'conferences', id)
+    getDoc(docRef).then(res => {
+        if (res.exists()) {
+            handler(res.data())
+        } else {
+            handler(null)
+        }
+    }).catch(err => {
+        errHandler(getErrMessage(err))
+    })
+
 }

@@ -26,7 +26,7 @@ function Login() {
         <input type="email" required={true} onChange={e => setEmail(e.target.value)} placeholder='email'></input>
         <input type="password" required={true} onChange={e => setPwd(e.target.value)} placeholder='password'></input>
         <button type="submit">{(loading) ? 'Loading....' : 'Submit'}</button>
-        <p>Don't have an Account <Link to={`/${role}/signup`}>Create one</Link></p>
+        <p>Don't have an Account <Link to='/role'>Create one</Link></p>
       </form>
     </div>
   )

@@ -13,7 +13,7 @@ function OrganizerSignup() {
             organizerSignup(form, (res) => {
                 alert("Successfully Created Account")
                 setLoading(false)
-                navigate('/login/organizer')
+                navigate('/organizer/home')
             }, (err) => {
                 var msg = err.message.split('/')
                 alert(msg[msg.length - 1])
@@ -51,7 +51,7 @@ function OrganizerSignup() {
             }} />
 
             <button type='submit' disabled={!((form.password) && form.confirmpwd && form.password === form.confirmpwd)}>{(loading) ? 'Loading...' : 'Submit'}</button>
-            <p>Already have an Account, <Link to="/login/organizer">Login Now</Link></p>
+            <p>Already have an Account, <Link to="/">Login Now</Link></p>
         </form>
     )
 }

@@ -1,5 +1,5 @@
 export const appName = 'orgarch'
-
+export const appUrl='http://localhost:3000'
 export const checkValidObj = (obj) => {
     var invalidObj = 0;
     Object.keys(obj).map(key => {
@@ -29,4 +29,11 @@ export const generateKey = () => {
     }
 
     return key;
+}
+
+
+
+export const getErrMessage=(err)=>{
+    var msg = err.message.split('/')
+    return msg[msg.length - 1]
 }

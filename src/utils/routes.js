@@ -7,15 +7,16 @@ import OrganizerHome from '../pages/organizer/OrganizerHome';
 import ReviewerHome from '../pages/reviewer/ReviewerHome';
 import ResearchPaperPage from '../pages/reviewer/ResearchPaperPage';
 import NewConference from '../pages/organizer/NewConference';
+import ConferencePage from '../pages/organizer/ConferencePage';
 
 export const Router = createBrowserRouter([
     {
         element: <Role />,
-        path: '/',
+        path: '/role',
     },
     {
         element: <Login />,
-        path: '/login/:role'
+        path: '/'
     },
     {
         element: <ReviewerSignup />,
@@ -40,6 +41,10 @@ export const Router = createBrowserRouter([
     {
         element: <NewConference />,
         path: '/organizer/addconference'
+    },
+    {
+        element: <ConferencePage />,
+        path: '/conference/:id'
     },
 
 ])
