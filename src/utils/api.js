@@ -1,7 +1,7 @@
 import { auth, db } from "./firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { checkValidObj, generateKey, getErrMessage } from "./plugins";
-import { getDoc, setDoc, doc, getDocs, collection, query } from "firebase/firestore";
+import { getDoc, setDoc, doc, getDocs, collection, query, updateDoc } from "firebase/firestore";
 
 export const loginUser = (data, handler, errHandler) => {
 
@@ -15,7 +15,7 @@ export const loginUser = (data, handler, errHandler) => {
         const docRef = doc(db, 'users', data.email)
         const docSnapp = await getDoc(docRef);
         if (docSnapp.exists()) {
-            handler(docSnapp.data().role)
+            handler(docSnapp.data())
         } else {
             auth.signOut()
             alert("User Doesn't exists.")
@@ -31,7 +31,9 @@ export const organizerSignup = (data, handler, errHandler) => {
 
     createUserWithEmailAndPassword(auth, data.email, data.password).then(result => {
         const docRef = doc(db, 'users', data.email)
-        setDoc(docRef, { ...data, role: 'organizer' }).then(res => handler(res)).catch(err => {
+        setDoc(docRef, { ...data, role: 'organizer' }).then(res => {
+            handler(res)
+        }).catch(err => {
             alert(err.message)
         })
     }).catch(err => errHandler(err))
@@ -69,7 +71,7 @@ export const addNewConference = async (data, handler, errHandler) => {
     const key = generateKey()
     const docRef = doc(db, 'conferences', key)
 
-    setDoc(docRef, data).then(res => handler(res, key)).catch(err => errHandler(err))
+    setDoc(docRef, { ...data, papers: false, key:key }).then(res => handler(res, key)).catch(err => errHandler(err))
 }
 export const getConferenceById = async (id, handler, errHandler) => {
     const docRef = doc(db, 'conferences', id)
@@ -84,15 +86,29 @@ export const getConferenceById = async (id, handler, errHandler) => {
     })
 
 }
-export const submitPaper=(previousConference,id, newPaper,handler,errHandler)=>{
-    const newRecord={
+export const submitPaper = (previousConference, id, newPaper, handler, errHandler) => {
+
+
+    const newRecord = {
         ...previousConference,
-        papers:[...previousConference.papers, newPaper]
+        papers: [...previousConference.papers, newPaper]
     }
-    const docRef=doc(db, 'conferences', id)
+    const docRef = doc(db, 'conferences', id)
 
-    setDoc(docRef, newRecord).then(res=>{
-
+    setDoc(docRef, newRecord).then(res => {
+        handler(res)
+    }).catch(err => {
+        errHandler(err)
+    })
+}
+export const enableCallForPapers = async (id, handler, errHandler) => {
+    const docRef = doc(db, 'conferences', id)
+    await updateDoc(docRef, {
+        papers: []
+    }).then(res => {
+        handler(res)
+    }).catch(err => {
+        errHandler(getErrMessage(err))
     })
 }
 // export const 

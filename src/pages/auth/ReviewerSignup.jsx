@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { reviewerSignup } from '../../utils/api'
 import { useNavigate, Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setRole, setUser } from '../../redux/reducers/authSlice'
 function ReviewerSignup() {
     const [form, setForm] = useState({})
     const navigate = useNavigate()
     const [loading,setLoading]=useState(false)
-
+    const dispatch=useDispatch()
     return (
 
         <div className="reviewerSignup">
@@ -13,6 +15,8 @@ function ReviewerSignup() {
                 e.preventDefault()
                 setLoading(true)
                 reviewerSignup(form,(res)=>{
+                    dispatch(setUser(form));
+                    dispatch(setRole('reviewer'))
                     alert("Successfully Created Account")
                     setLoading(false)
                     navigate('/reviewer/home')

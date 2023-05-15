@@ -2,18 +2,25 @@ import React, { useState } from 'react'
 import { loginUser } from '../../utils/api'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import Loader from '../../components/Loader'
+import { useDispatch } from 'react-redux'
+import { setRole, setUser } from '../../redux/reducers/authSlice'
 function Login() {
   const [email, setEmail] = useState('')
   const [password, setPwd] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  if (loading) { return <Loader /> }
   return (
     <div className="login">
       <form onSubmit={e => {
         e.preventDefault()
         setLoading(true)
-        loginUser({ email, password }, (role) => {
-          navigate(`/${role}/home`)
+        loginUser({ email, password }, (user) => {
+          dispatch(setUser(user));
+          dispatch(setRole(user.role))
+          navigate(`/${user.role}/home`)
           setLoading(false)
         }, (err => {
           var msg = err.message.split('/')

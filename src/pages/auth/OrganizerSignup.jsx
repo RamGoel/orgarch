@@ -2,15 +2,20 @@ import React, { useState } from 'react'
 import { organizerSignup } from '../../utils/api'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setRole, setUser } from '../../redux/reducers/authSlice'
 function OrganizerSignup() {
     const [form, setForm] = useState({})
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     return (
         <form onSubmit={(e) => {
             e.preventDefault()
             setLoading(true)
             organizerSignup(form, (res) => {
+                dispatch(setUser(form));
+                dispatch(setRole('organizer'))
                 alert("Successfully Created Account")
                 setLoading(false)
                 navigate('/organizer/home')

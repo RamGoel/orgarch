@@ -5,7 +5,7 @@ import { useParams } from 'react-router'
 function SubmitPapers({data}) {
     const [form, setForm] = useState()
     const [loading,setLoading]=useState(false)
-    const { id}=useParams()
+    const {id}=useParams()
     console.log(data, id)
     return (
         <form onSubmit={(e)=>{

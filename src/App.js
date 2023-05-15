@@ -2,13 +2,17 @@ import './App.css';
 
 import { RouterProvider } from 'react-router-dom';
 import { Router } from './utils/routes';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 
 function App() {
   return (
-    <div className="App">
-      <RouterProvider router={Router} />
-    </div>
+    <Provider store={store} >
+      <div className="App">
+        <RouterProvider router={Router} />
+      </div>
+    </Provider>
   );
 }
 

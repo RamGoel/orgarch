@@ -10,6 +10,7 @@ import NewConference from '../pages/organizer/NewConference';
 import ConferencePage from '../pages/organizer/ConferencePage';
 import SubmitPapers from '../pages/organizer/SubmitPapers';
 import AllConferences from '../pages/reviewer/AllConferences';
+import ConferencePapers from '../pages/organizer/ConferencePapers';
 export const Router = createBrowserRouter([
     {
         element: <Role />,
@@ -50,6 +51,10 @@ export const Router = createBrowserRouter([
     {
         element: <SubmitPapers />,
         path: '/conference/:id/submit'
+    },
+    {
+        element: <ConferencePapers />,
+        path: '/conference/:id/papers'
     },
     {
         element: <AllConferences />,
