@@ -8,7 +8,8 @@ function Login() {
   const { role } = useParams()
   const navigate = useNavigate()
   return (
-    <form onSubmit={e => {
+    <div className="login">
+      <form onSubmit={e => {
       e.preventDefault()
       loginUser({ email, password }, (role) => {
         navigate(`/${role}/home`)
@@ -20,6 +21,7 @@ function Login() {
       <button type="submit">submit</button>
       <p>Don't have an Account <Link to={`/${role}/signup`}>Create one</Link></p>
     </form>
+    </div>
   )
 }
 
