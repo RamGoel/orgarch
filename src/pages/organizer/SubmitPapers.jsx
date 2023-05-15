@@ -1,17 +1,25 @@
 import React, { useState } from 'react'
 import { submitPaper } from '../../utils/api'
 import { useParams } from 'react-router'
+import { getErrMessage } from '../../utils/plugins'
 
-function SubmitPapers({data}) {
+function SubmitPapers({ data }) {
     const [form, setForm] = useState()
-    const [loading,setLoading]=useState(false)
-    const {id}=useParams()
+    const [loading, setLoading] = useState(false)
+    const { id } = useParams()
+
     console.log(data, id)
     return (
-        <form onSubmit={(e)=>{
+        <form onSubmit={(e) => {
             e.preventDefault()
             setLoading(true)
-            submitPaper()
+            submitPaper(id, form, (res) => {
+                console.log(res)
+                setLoading(false)
+            }, err => {
+                alert(getErrMessage(err))
+                setLoading(false)
+            })
         }}>
             <input required={true} type="text" placeholder='Full Name' onChange={e => {
                 setForm({ ...form, name: e.target.value })
@@ -29,10 +37,10 @@ function SubmitPapers({data}) {
                 setForm({ ...form, tags: e.target.value })
             }} />
             <input required={true} type="file" onChange={e => {
-                setForm({ ...form, topic: e.target.files[0] })
+                setForm({ ...form, file: e.target.files[0] })
             }} />
 
-            <button>{loading?'Loading...':'Submit'}</button>
+            <button>{loading ? 'Loading...' : 'Submit'}</button>
         </form>
     )
 }

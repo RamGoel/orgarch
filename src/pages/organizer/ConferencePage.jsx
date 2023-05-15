@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router'
 import { enableCallForPapers, getConferenceById } from '../../utils/api'
 import Loader from '../../components/Loader'
 import NotFoundPage from '../../components/NotFound'
+import { appUrl } from '../../utils/plugins'
 function ConferencePage() {
     const { id } = useParams()
     const [isAvailable, setAvailable] = useState('')
@@ -38,8 +39,8 @@ function ConferencePage() {
     return (
         <div>
             <p>Welcome to {data.title || ''} Conference</p>
+            {data.papers!==false?<p>Submission Link - <a href={`${appUrl}/conference/${data.key}/submit`}>Click Here</a></p>:''}
             <ol>
-                <li>Conference ID - {id}</li>
                 {Object.keys(data).map(pair => {
                     return pair !== 'papers' ? <li>{pair} - {data[pair]}</li> : ''
                 })}

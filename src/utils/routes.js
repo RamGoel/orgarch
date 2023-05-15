@@ -5,7 +5,6 @@ import ReviewerSignup from '../pages/auth/ReviewerSignup';
 import OrganizerSignup from '../pages/auth/OrganizerSignup';
 import OrganizerHome from '../pages/organizer/OrganizerHome';
 import ReviewerHome from '../pages/reviewer/ReviewerHome';
-import ResearchPaperPage from '../pages/reviewer/Papers';
 import NewConference from '../pages/organizer/NewConference';
 import ConferencePage from '../pages/organizer/ConferencePage';
 import SubmitPapers from '../pages/organizer/SubmitPapers';
@@ -35,10 +34,6 @@ export const Router = createBrowserRouter([
     {
         element: <ReviewerHome />,
         path: '/reviewer/home'
-    },
-    {
-        element: <ResearchPaperPage />,
-        path: '/reviewer/page'
     },
     {
         element: <NewConference />,

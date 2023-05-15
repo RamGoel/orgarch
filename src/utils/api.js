@@ -1,7 +1,9 @@
-import { auth, db } from "./firebase";
+import { auth, db, storageRef } from "./firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { checkValidObj, generateKey, getErrMessage } from "./plugins";
 import { getDoc, setDoc, doc, getDocs, collection, query, updateDoc } from "firebase/firestore";
+import { storage } from "./firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 export const loginUser = (data, handler, errHandler) => {
 
@@ -71,7 +73,7 @@ export const addNewConference = async (data, handler, errHandler) => {
     const key = generateKey()
     const docRef = doc(db, 'conferences', key)
 
-    setDoc(docRef, { ...data, papers: false, key:key }).then(res => handler(res, key)).catch(err => errHandler(err))
+    setDoc(docRef, { ...data, papers: false, key: key }).then(res => handler(res, key)).catch(err => errHandler(err))
 }
 export const getConferenceById = async (id, handler, errHandler) => {
     const docRef = doc(db, 'conferences', id)
@@ -86,20 +88,41 @@ export const getConferenceById = async (id, handler, errHandler) => {
     })
 
 }
-export const submitPaper = (previousConference, id, newPaper, handler, errHandler) => {
+export const submitPaper = (id, newPaper, handler, errHandler) => {
+    var urlOfPaper = '';
+    var storageRef = ref(storage, newPaper.title)
 
 
-    const newRecord = {
-        ...previousConference,
-        papers: [...previousConference.papers, newPaper]
-    }
-    const docRef = doc(db, 'conferences', id)
+    const uploadTask = uploadBytesResumable(storageRef, newPaper.file);
 
-    setDoc(docRef, newRecord).then(res => {
-        handler(res)
-    }).catch(err => {
-        errHandler(err)
-    })
+    uploadTask.on('state_changed',
+        (snapshot) => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+        },
+        (error) => {
+            errHandler(getErrMessage(error))
+        },
+        () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                console.log('File available at', downloadURL);
+                urlOfPaper = downloadURL
+            });
+
+            const docRef = doc(db, 'conferences', id)
+            getDoc(docRef).then(res => {
+                updateDoc(docRef, { papers: [...res.data().papers, { ...newPaper, file: urlOfPaper }] }).then(res => {
+                    handler(res)
+                }).catch(err => {
+                    errHandler(err)
+                })
+            })
+
+            alert("Added Paper")
+            handler("success")
+        }
+    );
+
 }
 export const enableCallForPapers = async (id, handler, errHandler) => {
     const docRef = doc(db, 'conferences', id)
@@ -111,4 +134,10 @@ export const enableCallForPapers = async (id, handler, errHandler) => {
         errHandler(getErrMessage(err))
     })
 }
-// export const 
+export const getPapersById=async (id, handler, errHandler)=>{
+    const docRef=doc(db, 'conferences', id)
+
+    getDoc(docRef).then(result=>{
+        handler(result.data())
+    }).catch(err=>errHandler(getErrMessage(err)))
+}
