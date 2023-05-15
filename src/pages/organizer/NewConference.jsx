@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import { addNewConference } from '../../utils/api'
 import { appUrl, getErrMessage } from '../../utils/plugins'
 import { useNavigate } from 'react-router'
+import { useSelector } from 'react-redux'
 
 function NewConference() {
   const [form, setForm] = useState({})
+  const user = useSelector(state => state.auth.user)
   const [loading, setLoading] = useState(false)
   const [url, setURL] = useState(null)
   const navigate = useNavigate()
@@ -12,7 +14,7 @@ function NewConference() {
     <form onSubmit={e => {
       e.preventDefault()
       setLoading(true)
-      addNewConference(form, (res, key) => {
+      addNewConference({ ...form, actor: user.email }, (res, key) => {
         console.log(res)
         navigate(`/conference/${key}`)
         alert("Successfully Added")

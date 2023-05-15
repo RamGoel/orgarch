@@ -156,11 +156,12 @@ export const getAllReviewer = async (handler, errHandler) => {
     }).catch(err => errHandler(getErrMessage(err)))
 }
 export const assignReviewer = async (email, paperId, confId, handler, errHandler) => {
+    console.log('starting')
     const docRef = doc(db, 'conferences', confId)
     getDoc(docRef).then(res => {
         var allPapers = res.data().papers
         allPapers[paperId] = { ...allPapers[paperId], assigned: email }
-        updateDoc(docRef, allPapers).then(res => {
+        updateDoc(docRef, {papers:allPapers}).then(res => {
             handler(res)
         }).catch(err => errHandler(getErrMessage(err)))
     })
@@ -186,4 +187,14 @@ export const getAssignedPaper = async (email, handler, errHandler) => {
         })
         handler(assignedPapers)
     }).catch(err => errHandler(getErrMessage(err)))
+}
+export const getConferencesByEmail = async (email,handler, errHandler) => {
+    var allConferences = []
+    const q = query(collection(db, "conferences"), where('actor','==',email));
+    await getDocs(q).then(querySnapshot => {
+        querySnapshot.forEach((doc) => {
+            allConferences.push(doc.data())
+        })
+    }).catch(err => errHandler(err))
+    handler(allConferences)
 }

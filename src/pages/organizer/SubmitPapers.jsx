@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { submitPaper } from '../../utils/api'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { getErrMessage } from '../../utils/plugins'
 
 function SubmitPapers({ data }) {
     const [form, setForm] = useState()
     const [loading, setLoading] = useState(false)
     const { id } = useParams()
-
+    const navigate=useNavigate()
     console.log(data, id)
     return (
         <form onSubmit={(e) => {
@@ -16,6 +16,7 @@ function SubmitPapers({ data }) {
             submitPaper(id, form, (res) => {
                 console.log(res)
                 setLoading(false)
+                navigate(`/conference/${id}/papers`)
             }, err => {
                 alert(getErrMessage(err))
                 setLoading(false)

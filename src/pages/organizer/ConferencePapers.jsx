@@ -10,6 +10,7 @@ function ConferencePapers() {
     const [loading, setLoading] = useState(false)
     const { id } = useParams()
     useEffect(e => {
+        console.log('snsdn')
         setLoading(true)
         getPapersById(id, (res) => {
             if (data[0] === true) {
@@ -24,13 +25,13 @@ function ConferencePapers() {
                 setLoading(false)
                 alert(err)
             })
-        }, err =>{
+        }, err => {
             alert(err)
             setLoading(false)
         })
 
 
-    },[])
+    }, [])
     return (
         loading ? <Loader /> : Object.values(data).length ? <table>
             <tr>
@@ -49,21 +50,19 @@ function ConferencePapers() {
                         <td>{paper.name}</td>
                         <td>{paper.org}</td>
                         <td><a href={paper.file}>Link</a></td>
-                        <td>
-                            <select disabled={paper.assigned ? true : false} onChange={(e) => {
-                                assignReviewer(e.target.value, paper.id, paper.confId, (res) => {
-                                    alert("Successfully Assigned")
-                                }, err => {
-                                    alert(err)
+                        <select onChange={(e) => {
+                            assignReviewer(e.target.value, paper.id, paper.confId, (res) => {
+                                alert("Successfully Assigned")
+                            }, err => {
+                                alert(err)
+                            })
+                        }}>
+                            {
+                                reviewers.map(e => {
+                                    return <option value={e.email}>{e.name} - {e.interest}</option>
                                 })
-                            }}>
-                                {
-                                    reviewers.map(e => {
-                                        return <option value={e.email}>{e.name} - {e.interest}</option>
-                                    })
-                                }
-                            </select>
-                        </td>
+                            }
+                        </select>
                     </tr>
                 })
             }</table> : <NoDataPage message={'No Papers Submitted as of now'} />
