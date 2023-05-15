@@ -5,10 +5,11 @@ import ReviewerSignup from '../pages/auth/ReviewerSignup';
 import OrganizerSignup from '../pages/auth/OrganizerSignup';
 import OrganizerHome from '../pages/organizer/OrganizerHome';
 import ReviewerHome from '../pages/reviewer/ReviewerHome';
-import ResearchPaperPage from '../pages/reviewer/ResearchPaperPage';
+import ResearchPaperPage from '../pages/reviewer/Papers';
 import NewConference from '../pages/organizer/NewConference';
 import ConferencePage from '../pages/organizer/ConferencePage';
-
+import SubmitPapers from '../pages/organizer/SubmitPapers';
+import AllConferences from '../pages/reviewer/AllConferences';
 export const Router = createBrowserRouter([
     {
         element: <Role />,
@@ -45,6 +46,14 @@ export const Router = createBrowserRouter([
     {
         element: <ConferencePage />,
         path: '/conference/:id'
+    },
+    {
+        element: <SubmitPapers />,
+        path: '/conference/:id/submit'
+    },
+    {
+        element: <AllConferences />,
+        path: '/conferences'
     },
 
 ])

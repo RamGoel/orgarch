@@ -49,9 +49,8 @@ export const reviewerSignup = (data, handler, errHandler) => {
         })
     }).catch(err => errHandler(err))
 }
-
 export const getAllConferences = async (handler, errHandler) => {
-    const q = query(collection(db, "cities"));
+    const q = query(collection(db, "conferences"));
     await getDocs(q).then(querySnapshot => {
         var allConferences = []
         querySnapshot.forEach((doc) => {
@@ -72,12 +71,10 @@ export const addNewConference = async (data, handler, errHandler) => {
 
     setDoc(docRef, data).then(res => handler(res, key)).catch(err => errHandler(err))
 }
-
-
 export const getConferenceById = async (id, handler, errHandler) => {
     const docRef = doc(db, 'conferences', id)
     getDoc(docRef).then(res => {
-        if (res.exists()) {
+        if (res.exists) {
             handler(res.data())
         } else {
             handler(null)
@@ -87,3 +84,15 @@ export const getConferenceById = async (id, handler, errHandler) => {
     })
 
 }
+export const submitPaper=(previousConference,id, newPaper,handler,errHandler)=>{
+    const newRecord={
+        ...previousConference,
+        papers:[...previousConference.papers, newPaper]
+    }
+    const docRef=doc(db, 'conferences', id)
+
+    setDoc(docRef, newRecord).then(res=>{
+
+    })
+}
+// export const 

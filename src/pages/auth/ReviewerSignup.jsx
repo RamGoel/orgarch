@@ -15,7 +15,7 @@ function ReviewerSignup() {
                 reviewerSignup(form,(res)=>{
                     alert("Successfully Created Account")
                     setLoading(false)
-                    navigate('/login/reveiwer')
+                    navigate('/reviewer/home')
                 },(err)=>{
                     var msg = err.message.split('/')
                     alert(msg[msg.length - 1])
