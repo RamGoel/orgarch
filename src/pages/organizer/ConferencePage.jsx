@@ -8,10 +8,10 @@ function ConferencePage() {
     const [data, setData] = useState({})
     useEffect(e => {
         getConferenceById(id, (res) => {
-            if (res == null) {
+            if (res === null) {
                 setAvailable(false)
             } else {
-                if(data=={}){
+                if(data==={}){
 
                     setData(res)
                 }
@@ -22,7 +22,7 @@ function ConferencePage() {
         })
     })
 
-    if (isAvailable == false) {
+    if (isAvailable === false) {
         return <h1>No Conference Available</h1>
     }
 

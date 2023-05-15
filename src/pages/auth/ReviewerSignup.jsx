@@ -51,7 +51,7 @@ function ReviewerSignup() {
                     setForm({ ...form, confirmpwd: e.target.value })
                 }} />
 
-                <button type='submit' disabled={!((form.password) && form.confirmpwd && form.password === form.confirmpwd)}>Submit</button>
+                <button type='submit' disabled={!((form.password) && form.confirmpwd && form.password === form.confirmpwd)}>{loading?'Loading...':'submit'}</button>
                 <p>Already have an Account, <Link to="/">Login Now</Link></p>
             </form>
         </div>

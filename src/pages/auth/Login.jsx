@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import { loginUser } from '../../utils/api'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 function Login() {
   const [email, setEmail] = useState('')
   const [password, setPwd] = useState('')
   const [loading, setLoading] = useState(false)
-  const { role } = useParams()
   const navigate = useNavigate()
   return (
     <div className="login">

@@ -15,7 +15,7 @@ export default function ResearchPaperPage() {
 
       <div class="row">
         <div class="testimonial-col">
-          <img src={conf}/>
+          <img alt="" src={conf}/>
           <div>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui rem ratione corrupti delectus quia commodi consequatur repudiandae, impedit et natus repellat itaque sequi. Similique sapiente dolore adipisci consequuntur, quis error?</p>
             <h3>Gaurav Malik</h3>
@@ -27,7 +27,7 @@ export default function ResearchPaperPage() {
           </div>
         </div>
         <div class="testimonial-col">
-          <img src={conf}/>
+          <img alt="" src={conf}/>
           <div>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui rem ratione corrupti delectus quia commodi consequatur repudiandae, impedit et natus repellat itaque sequi. Similique sapiente dolore adipisci consequuntur, quis error?</p>
             <h3>Amar J</h3>
