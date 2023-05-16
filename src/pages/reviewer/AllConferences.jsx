@@ -22,7 +22,7 @@ function AllConferences() {
         loading ? <Loader /> : <div>
             {
                 data.length?data.map(e => {
-                    return <ConferenceCard data={e} />
+                    return <ConferenceCard data={e} /> 
                 }):<NoDataPage message={'No conferences are scheduled'} />
             }
         </div>

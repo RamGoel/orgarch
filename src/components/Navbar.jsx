@@ -19,8 +19,11 @@ export default function Navbar() {
       </nav>
 
       <div class="text-box">
-        <h1>Research Paper Review</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, esse.</p>
+        <h1>Smart Review</h1>
+        <div className="home-desc">
+        Smart Review is a cutting-edge review system designed to revolutionize the evaluation process for research papers. Leveraging advanced technologies and intelligent algorithms, Smart Review aims to streamline and enhance the peer review process, ensuring rigorous assessment and valuable feedback for researchers worldwide.
+        With Smart Review, the traditional paper-based review system becomes a thing of the past. The platform offers an intuitive and user-friendly interface that enables reviewers to efficiently assess the quality, significance, and validity of research papers in their respective fields. Smart Review caters to a wide range of academic disciplines, encompassing sciences, humanities, engineering, social sciences, and more.
+        </div>
         <a href='#role' class="hero-btn">Scroll down to explore</a>
       </div>
     </section>

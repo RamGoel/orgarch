@@ -123,6 +123,18 @@ nav img {
    transition: 1s;
 }
 
+.home-desc {
+  display: flex;
+  justify-content: space-evenly;
+  margin: auto;
+  width: 60%;
+  text-align: center;
+
+  padding: 0 0 35px 0;
+  /* background-color: rgb(56, 54, 54);
+  opacity: 30%; */
+}
+
 /* For responsiveness----------------------------- */
 nav .fa {
    display: none;

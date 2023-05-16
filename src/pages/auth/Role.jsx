@@ -6,6 +6,8 @@ import conf from '../../assets/image.png'
 import person from '../../assets/person.png'
 import Navbar from '../../components/Navbar'
 
+import './Auth.css'
+
 function Role() {
     return (
         <>
@@ -17,14 +19,14 @@ function Role() {
                 <div class="row">
                     <Link to="/organizer/signup" className='landingPageLinks'>
                         <div class="facilities-col">
-                            <img src={conf} alt='img' />
+                            <img src={conf} alt='img' className='facilities-img'/>
                             <h3>Conference Organizer</h3>
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta voluptatum vero, architecto deserunt, non quam amet libero illum commodi nulla quia impedit, similique corporis quibusdam?</p>
                         </div>
                     </Link>
                     <Link to="/reviewer/signup" className='landingPageLinks'>
                         <div class="facilities-col">
-                            <img src={person} alt='img' />
+                            <img src={person} alt='img' className='facilities-img'/>
                             <h3>Reviewer</h3>
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta voluptatum vero, architecto deserunt, non quam amet libero illum commodi nulla quia impedit, similique corporis quibusdam?</p>
                         </div>
