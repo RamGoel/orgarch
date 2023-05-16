@@ -5,7 +5,7 @@ export default function Navbar() {
     <div>
     <section class="header">
       <nav>
-        <h2>LOGO</h2>
+        <h2>SMART REVIEW</h2>
         <div class="nav-links" id="navLinks">
           <i class="fa fa-times" onClick="hideMenu()"></i>
           {/* <ul>
