@@ -3,11 +3,13 @@ import { assignReviewer, getAllReviewer, getPapersById } from '../../utils/api'
 import { useParams } from 'react-router'
 import Loader from '../../components/Loader'
 import NoDataPage from '../../components/NoData'
+import { useSelector } from 'react-redux'
 
 function ConferencePapers() {
     const [data, setData] = useState([true])
     const [reviewers, setReviewers] = useState([true])
     const [loading, setLoading] = useState(false)
+    const user=useSelector(state=>state.auth.user)
     const { id } = useParams()
     useEffect(e => {
         console.log('snsdn')
@@ -40,7 +42,7 @@ function ConferencePapers() {
                 <th>From</th>
                 <th>Organization</th>
                 <th>Link</th>
-                <th>Reviewer</th>
+                {user.role==='organizer'?(<th>Reviewer</th>):''}
             </tr>
             {
                 Object.values(data).map(paper => {
@@ -50,7 +52,7 @@ function ConferencePapers() {
                         <td>{paper.name}</td>
                         <td>{paper.org}</td>
                         <td><a href={paper.file}>Link</a></td>
-                        <select onChange={(e) => {
+                        {user.role==='organizer'?<select onChange={(e) => {
                             assignReviewer(e.target.value, paper.id, paper.confId, (res) => {
                                 alert("Successfully Assigned")
                             }, err => {
@@ -62,7 +64,7 @@ function ConferencePapers() {
                                     return <option value={e.email}>{e.name} - {e.interest}</option>
                                 })
                             }
-                        </select>
+                        </select>:''}
                     </tr>
                 })
             }</table> : <NoDataPage message={'No Papers Submitted as of now'} />

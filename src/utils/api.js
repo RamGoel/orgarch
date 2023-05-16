@@ -115,7 +115,7 @@ export const submitPaper = (confId, newPaper, handler, errHandler) => {
             getDoc(docRef).then(res => {
                 const updatedAllPapers = { ...res.data().papers }
                 updatedAllPapers[paperId] = { ...newPaper, file: urlOfPaper, id: paperId, confId: confId }
-                updateDoc(docRef, {papers:updatedAllPapers}).then(res => {
+                updateDoc(docRef, { papers: updatedAllPapers }).then(res => {
                     handler(res)
                 }).catch(err => {
                     errHandler(err)
@@ -161,7 +161,7 @@ export const assignReviewer = async (email, paperId, confId, handler, errHandler
     getDoc(docRef).then(res => {
         var allPapers = res.data().papers
         allPapers[paperId] = { ...allPapers[paperId], assigned: email }
-        updateDoc(docRef, {papers:allPapers}).then(res => {
+        updateDoc(docRef, { papers: allPapers }).then(res => {
             handler(res)
         }).catch(err => errHandler(getErrMessage(err)))
     })
@@ -171,36 +171,64 @@ export const getAssignedPaper = async (email, handler, errHandler) => {
     var assignedPapers = []
     const q = query(collection(db, "conferences"));
     await getDocs(q).then(querySnapshot => {
-        var allConferences = []
         querySnapshot.forEach((doc) => {
-            allConferences.push(doc.data())
-        })
-// eslint-disable-next-line
-        allConferences.map(element => {
-            if(element.papers!==false){
+
+            var conferenceData = doc.data()
+            if (conferenceData.papers !== false) {
                 // eslint-disable-next-line
-                element.papers.map(e => {
+                Object.values(conferenceData.papers).map(e => {
                     if (e.assigned === email) {
                         assignedPapers.push(e)
+                        console.log(e)
                     }
                 })
             }
         })
         handler(assignedPapers)
-    }).catch(err => errHandler(getErrMessage(err)))
-}
-export const getConferencesByEmail = async (email,handler, errHandler) => {
-    var allConferences = []
-    try{
+        // eslint-disable-next-line
 
-        const q = query(collection(db, "conferences"), where('actor','==',email));
+    }).catch(err => errHandler(getErrMessage(err)))
+
+}
+export const getConferencesByEmail = async (email, handler, errHandler) => {
+    var allConferences = []
+    try {
+
+        const q = query(collection(db, "conferences"), where('actor', '==', email));
         await getDocs(q).then(querySnapshot => {
             querySnapshot.forEach((doc) => {
                 allConferences.push(doc.data())
             })
         }).catch(err => errHandler(getErrMessage(err)))
         handler(allConferences)
-    }catch(e){
+    } catch (e) {
         errHandler("Some Error Occured", e.message)
     }
+}
+export const submitReview = (confId, paperId, newReview, userName, userEmail, handler, errHandler) => {
+    if (checkValidObj(newReview) === false) {
+        alert("All Fields are compulsory.")
+        return;
+    }
+    console.log(newReview)
+    const docRef = doc(db, 'conferences', confId)
+    getDoc(docRef).then(res => {
+        const updatedAllPapers = { ...res.data().papers }
+        var newReviews = [...updatedAllPapers[paperId].reviews, { ...newReview, reviewer: userName, email: userEmail }]
+        updatedAllPapers[paperId].reviews = newReviews
+
+        console.log(updatedAllPapers)
+        updateDoc(docRef, { papers: updatedAllPapers }).then(res => {
+            handler(res)
+        }).catch(err => {
+            errHandler(getErrMessage(err))
+        })
+    })
+}
+export const getReviewsById = async (id, handler, errHandler) => {
+    const docRef = doc(db, 'conferences', id)
+
+    getDoc(docRef).then(result => {
+        handler(result.data())
+    }).catch(err => errHandler(getErrMessage(err)))
 }
