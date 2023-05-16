@@ -6,7 +6,7 @@ export default function Navbar() {
   return (
     <div style={{ backgroundColor: '#bbabec', display: 'flex', justifyContent: 'flex-end'}}>
     <nav class="relative container mx-auto p-1 amar-nabvbar flex justify-between">
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between " style={{ width: '100%'}}>
         <div class="pt-2 logo-div">
             {/* <h1 class="logo-name">AAA<span class="logo-name-small"></span></h1> */}
             <img src={logo} alt="" class="logo-img"/> 

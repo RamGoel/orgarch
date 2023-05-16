@@ -11,9 +11,12 @@ import Home from '../../components/Home'
 import Footer from '../../components/Footer'
 import RemHome from '../../components/RemHome'
 
+import './Auth.css'
+
 function Role() {
     return (
         <>
+            <div>
             <Navbar />
             <Home/>
             <section id="role" class="facilities">
@@ -39,6 +42,7 @@ function Role() {
             </section>
             <RemHome/>
             <Footer/>
+            </div>
         </>
     )
 }
