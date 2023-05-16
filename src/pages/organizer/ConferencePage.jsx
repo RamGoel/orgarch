@@ -5,6 +5,9 @@ import Loader from '../../components/Loader'
 import NotFoundPage from '../../components/NotFound'
 import { appUrl } from '../../utils/plugins'
 import { useSelector } from 'react-redux'
+
+import './organizer.css'
+
 function ConferencePage() {
     const { id } = useParams()
     const role = useSelector(state => state.auth.role)
@@ -40,8 +43,8 @@ function ConferencePage() {
     }
 
     return (
-        <div>
-            <p>Welcome to {data.title || ''} Conference</p>
+        <div className='ConferencePageContainer'>
+            <p className='confHeading'>Welcome to {data.title || ''} Conference</p>
             {data.papers !== false ? <p>Submission Link - <a href={`${appUrl}/conference/${data.key}/submit`}>Click Here</a></p> : ''}
             <ol>
                 {Object.keys(data).map(pair => {
