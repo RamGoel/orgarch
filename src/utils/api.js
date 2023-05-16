@@ -191,11 +191,16 @@ export const getAssignedPaper = async (email, handler, errHandler) => {
 }
 export const getConferencesByEmail = async (email,handler, errHandler) => {
     var allConferences = []
-    const q = query(collection(db, "conferences"), where('actor','==',email));
-    await getDocs(q).then(querySnapshot => {
-        querySnapshot.forEach((doc) => {
-            allConferences.push(doc.data())
-        })
-    }).catch(err => errHandler(err))
-    handler(allConferences)
+    try{
+
+        const q = query(collection(db, "conferences"), where('actor','==',email));
+        await getDocs(q).then(querySnapshot => {
+            querySnapshot.forEach((doc) => {
+                allConferences.push(doc.data())
+            })
+        }).catch(err => errHandler(getErrMessage(err)))
+        handler(allConferences)
+    }catch(e){
+        errHandler("Some Error Occured", e.message)
+    }
 }

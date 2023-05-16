@@ -15,7 +15,7 @@ function OrganizerHome() {
       setData(result)
       setLoading(false)
     }, err => {
-      alert(getErrMessage(err))
+      alert(err)
       setLoading(false)
     })
   // eslint-disable-next-line
