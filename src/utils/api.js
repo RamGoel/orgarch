@@ -114,7 +114,7 @@ export const submitPaper = (confId, newPaper, handler, errHandler) => {
             const docRef = doc(db, 'conferences', confId)
             getDoc(docRef).then(res => {
                 const updatedAllPapers = { ...res.data().papers }
-                updatedAllPapers[paperId] = { ...newPaper, file: urlOfPaper, id: paperId, confId: confId }
+                updatedAllPapers[paperId] = { ...newPaper, reviews: [], file: urlOfPaper, id: paperId, confId: confId }
                 updateDoc(docRef, { papers: updatedAllPapers }).then(res => {
                     handler(res)
                 }).catch(err => {
@@ -193,7 +193,6 @@ export const getAssignedPaper = async (email, handler, errHandler) => {
 export const getConferencesByEmail = async (email, handler, errHandler) => {
     var allConferences = []
     try {
-
         const q = query(collection(db, "conferences"), where('actor', '==', email));
         await getDocs(q).then(querySnapshot => {
             querySnapshot.forEach((doc) => {

@@ -52,7 +52,7 @@ function ConferencePage() {
                 })}
             </ol>
             {
-                data.papers === false ? <button disabled={role === 'reviewer'} onClick={() => {
+                data.papers === false ? <button disabled={!(role === 'organizer')} onClick={() => {
                     var isEnable = window.confirm("Do you want to Enable Call for Papers?")
                     if (isEnable) {
                         enableCallForPapers(id, (res) => {
@@ -61,7 +61,7 @@ function ConferencePage() {
                             alert(err)
                         })
                     }
-                }}>{(role === 'reviewer') ? 'Call for Papers' : 'Open Call for Papers'} <i className='fa fa-lock'></i></button> : <button onClick={() => {
+                }}>{!(role === 'organizer') ? 'Call for Papers is Locked' : 'Open Call for Papers'} <i className='fa fa-lock'></i></button> : <button onClick={() => {
                     navigate(`/conference/${id}/papers`, { id: id })
                 }}>View Papers <i className='fa fa-angle-right'></i></button>
             }

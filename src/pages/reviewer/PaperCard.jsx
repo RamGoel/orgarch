@@ -12,10 +12,10 @@ function PaperCard({ paper }) {
       <p>- {paper.name} from {paper.org}</p>
       <a href={paper.file}><i className='fa fa-file' />View File</a>
       <button onClick={() => {
-        navigate(`/conference/${paper.confId}/paper/${paper.id}/addreview`, { state: {paper}, replace: true })
+        navigate(`/conference/${paper.confId}/paper/${paper.id}/addreview`, { state: {paper} })
       }}>Add Review</button>
       <button onClick={() => {
-        navigate(`/conference/${paper.confId}/paper/${paper.id}/reviews`, { state: {paper}, replace: true })
+        navigate(`/conference/${paper.confId}/paper/${paper.id}/reviews`, { state: {paper} })
       }}>View Reviews</button>
     </div>
   )

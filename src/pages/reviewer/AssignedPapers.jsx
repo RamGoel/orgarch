@@ -16,7 +16,7 @@ function AssignedPapers() {
         }, err => {
             alert(err)
         })
-    })
+    },[])
     return (
         (papers[0] === true) ? <Loader /> : <div>
             {
