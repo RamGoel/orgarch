@@ -12,12 +12,12 @@ export default function Navbar() {
             <img src={logo} alt="" class="logo-img"/> 
         </div>
         <div class="hidden md:flex space-x-6">
-            <a href="#">Milestones</a>
-            <a href="#">About Us</a>
-            <a href="#">Our Work</a>
-            <a href="#">Community</a>
+            <a href="#kdm">Milestones</a>
+            <a href="#kdm">About Us</a>
+            <a href="#kdm">Our Work</a>
+            <a href="#kdm">Community</a>
         </div>
-        <a href="" class="hidden md:block p-3 px-6 pt-2 text-white a-colour rounded-full baseline hover:a-colourLight">Let's connect</a>
+        <a href="#mskdm" class="hidden md:block p-3 px-6 pt-2 text-white a-colour rounded-full baseline hover:a-colourLight">Let's connect</a>
 
         <button id="menu-btn" class="block hamburger md:hidden focus:outline-none">
             <span class="hamburger-top"></span>
@@ -28,10 +28,10 @@ export default function Navbar() {
     
     <div class="md:hidden">
         <div id="menu" class="absolute flex-col items-center self-end hidden py-8 mt-10 space-y-6 font-bold bg-white sm:w-auto sm:self-center left-6 right-6 drop-shadow-md">
-            <a href="#">Milestones</a>
-            <a href="#">About Us</a>
-            <a href="#">Our work</a>
-            <a href="#">Commmunity</a>
+            <a href="#kdm">Milestones</a>
+            <a href="#kdm">About Us</a>
+            <a href="#kdm">Our work</a>
+            <a href="#kdm">Commmunity</a>
         </div>
     </div>
 </nav>

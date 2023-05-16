@@ -19,34 +19,34 @@ export default function Footer() {
                 <img src="/img/aaa.jpg" alt="" class="logo-img"/>
             </div>
             <div class="flex justify-center space-x-4">
-                <a href="#">
+                <a href="#sdkn">
                     <img src={facebook} alt="" class="h-8"/>
                 </a>
-                <a href="#">
+                <a href="#sdkn">
                     <img src={instagram} alt="" class="h-8"/>
                 </a>
-                <a href="#">
+                <a href="#sdkn">
                     <img src={pinterest} alt="" class="h-8"/>
                 </a>
-                <a href="#">
+                <a href="#sdkn">
                     <img src={youtube} alt="" class="h-8"/>
                 </a>
-                <a href="#">
+                <a href="#sdkn">
                     <img src={twitter} alt="" class="h-8/"/>
                 </a>
             </div>
         </div>
         <div class="flex justify-around space-x-32">
             <div class="flex flex-col space-y-3 text-white">
-                <a href="#" class="hover:text-brightRed">Home</a>
-                <a href="#" class="hover:text-brightRed">Pricing</a>
-                <a href="#" class="hover:text-brightRed">Products</a>
-                <a href="#" class="hover:text-brightRed">About</a>
+                <a href="#sdkn" class="hover:text-brightRed">Home</a>
+                <a href="#sdkn" class="hover:text-brightRed">Pricing</a>
+                <a href="#sdkn" class="hover:text-brightRed">Products</a>
+                <a href="#sdkn" class="hover:text-brightRed">About</a>
             </div>
             <div class="flex flex-col space-y-3 text-white">
-                <a href="#" class="hover:text-brightRed">Careers</a>
-                <a href="#" class="hover:text-brightRed">Community</a>
-                <a href="#" class="hover:text-brightRed">Privacy policy</a>
+                <a href="#sdkn" class="hover:text-brightRed">Careers</a>
+                <a href="#sdkn" class="hover:text-brightRed">Community</a>
+                <a href="#sdkn" class="hover:text-brightRed">Privacy policy</a>
             </div>
         </div>
 

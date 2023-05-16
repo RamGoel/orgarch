@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { assignReviewer, getAllReviewer, getReviewsById } from '../../utils/api'
-import { useLocation, useParams } from 'react-router'
+import {getReviewsById } from '../../utils/api'
+import { useLocation } from 'react-router'
 import Loader from '../../components/Loader'
 import NoDataPage from '../../components/NoData'
-import { useSelector } from 'react-redux'
 
 function ConferenceReviews() {
     const [data, setData] = useState([true])
     const [loading, setLoading] = useState(false)
-    const user = useSelector(state => state.auth.user)
     const location = useLocation()
     useEffect(e => {
         setLoading(true)

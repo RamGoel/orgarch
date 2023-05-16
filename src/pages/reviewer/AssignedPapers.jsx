@@ -16,6 +16,7 @@ function AssignedPapers() {
         }, err => {
             alert(err)
         })
+        // eslint-disable-next-line
     },[])
     return (
         (papers[0] === true) ? <Loader /> : <div>

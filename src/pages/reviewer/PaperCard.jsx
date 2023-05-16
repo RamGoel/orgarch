@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router'
-import AddReview from './AddReview'
 
 function PaperCard({ paper }) {
   const navigate = useNavigate()
