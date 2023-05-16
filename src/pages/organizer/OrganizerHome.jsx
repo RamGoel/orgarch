@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getConferencesByEmail } from '../../utils/api'
 import { useSelector } from 'react-redux'
-import { getErrMessage } from '../../utils/plugins'
+// import { getErrMessage } from '../../utils/plugins'
 import Loader from '../../components/Loader'
 
 function OrganizerHome() {

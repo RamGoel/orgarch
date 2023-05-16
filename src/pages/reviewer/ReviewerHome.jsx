@@ -9,7 +9,7 @@ function ReviewerHome() {
   const [tab, setTab] = useState(0)
   return (
     <>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div style={{ display: 'flex', alignItems: 'center' }} className='reviewerHome'>
         <button className='buttonReviewerHome' onClick={()=>setTab(1)}>Conferences</button>
         <button className='buttonReviewerHome' onClick={()=>setTab(0)}>Assigned Papers</button>
       </div>

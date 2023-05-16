@@ -13,11 +13,11 @@ import ConferencePapers from '../pages/organizer/ConferencePapers';
 export const Router = createBrowserRouter([
     {
         element: <Role />,
-        path: '/role',
+        path: '/',
     },
     {
         element: <Login />,
-        path: '/'
+        path: '/login'
     },
     {
         element: <ReviewerSignup />,

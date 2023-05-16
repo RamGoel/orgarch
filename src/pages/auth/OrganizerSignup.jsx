@@ -56,7 +56,7 @@ function OrganizerSignup() {
             }} />
 
             <button type='submit' disabled={!((form.password) && form.confirmpwd && form.password === form.confirmpwd)}>{(loading) ? 'Loading...' : 'Submit'}</button>
-            <p>Already have an Account, <Link to="/">Login Now</Link></p>
+            <p>Already have an Account, <Link to="/login">Login Now</Link></p>
         </form>
     )
 }
