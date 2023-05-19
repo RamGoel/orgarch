@@ -3,8 +3,6 @@ import { submitPaper } from '../../utils/api'
 import { useNavigate, useParams } from 'react-router'
 import { getErrMessage } from '../../utils/plugins'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import AuthorSignup from '../auth/AuthorSignup'
 
 function SubmitPapers({ data }) {
     const [form, setForm] = useState()
