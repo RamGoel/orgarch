@@ -17,6 +17,7 @@ export const loginUser = (data, handler, errHandler) => {
         const docRef = doc(db, 'users', data.email)
         const docSnapp = await getDoc(docRef);
         if (docSnapp.exists()) {
+            console.log(docSnapp.data())
             handler(docSnapp.data())
         } else {
             auth.signOut()
@@ -49,6 +50,19 @@ export const reviewerSignup = (data, handler, errHandler) => {
     createUserWithEmailAndPassword(auth, data.email, data.password).then(result => {
         const docRef = doc(db, 'users', data.email)
         setDoc(docRef, { ...data, role: 'reviewer', assigned: null }).then(res => handler(res)).catch(err => {
+            alert(err.message)
+        })
+    }).catch(err => errHandler(err))
+}
+export const authorSignup = (data, handler, errHandler) => {
+    if (checkValidObj(data) === false) {
+        alert("All Fields are compulsory.")
+        return;
+    }
+
+    createUserWithEmailAndPassword(auth, data.email, data.password).then(result => {
+        const docRef = doc(db, 'users', data.email)
+        setDoc(docRef, { ...data, role: 'author', uploaded: null }).then(res => handler(res)).catch(err => {
             alert(err.message)
         })
     }).catch(err => errHandler(err))

@@ -12,6 +12,8 @@ import AllConferences from '../pages/reviewer/AllConferences';
 import ConferencePapers from '../pages/organizer/ConferencePapers';
 import AddReview from '../pages/reviewer/AddReview';
 import ConferenceReviews from '../pages/reviewer/ConferenceReviews';
+import AuthorSignup from '../pages/auth/AuthorSignup';
+import AuthorHome from '../components/AuthorHome';
 export const Router = createBrowserRouter([
     {
         element: <Role />,
@@ -30,12 +32,20 @@ export const Router = createBrowserRouter([
         path: '/organizer/signup'
     },
     {
+        element: <AuthorSignup />,
+        path: '/author/signup'
+    },
+    {
         element: <OrganizerHome />,
         path: '/organizer/home'
     },
     {
         element: <ReviewerHome />,
         path: '/reviewer/home'
+    },
+    {
+        element: <AuthorHome />,
+        path: '/author/home'
     },
     {
         element: <NewConference />,

@@ -7,6 +7,7 @@ import { appUrl } from '../../utils/plugins'
 import { useSelector } from 'react-redux'
 
 import './organizer.css'
+import { Link } from 'react-router-dom'
 
 function ConferencePage() {
     const { id } = useParams()
@@ -45,7 +46,7 @@ function ConferencePage() {
     return (
         <div className='ConferencePageContainer'>
             <p className='confHeading'>Welcome to {data.title || ''} Conference</p>
-            {data.papers !== false ? <p>Submission Link - <a href={`${appUrl}/conference/${data.key}/submit`}>Click Here</a></p> : ''}
+            {data.papers !== false ? <p>Submission Link - <Link to={`/conference/${data.key}/submit`}>Click Here</Link></p> : ''}
             <ol>
                 {Object.keys(data).map(pair => {
                     return pair !== 'papers' ? <li>{pair} - {data[pair]}</li> : ''

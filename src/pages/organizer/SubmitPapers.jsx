@@ -1,14 +1,26 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { submitPaper } from '../../utils/api'
 import { useNavigate, useParams } from 'react-router'
 import { getErrMessage } from '../../utils/plugins'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import AuthorSignup from '../auth/AuthorSignup'
 
 function SubmitPapers({ data }) {
     const [form, setForm] = useState()
     const [loading, setLoading] = useState(false)
     const { id } = useParams()
+    const user=useSelector(state=>state.auth.user)
     const navigate=useNavigate()
-    console.log(data, id)
+    useEffect(e=>{
+        console.log(user.role)
+        if(user.role===''){
+            navigate('/login')
+        }
+        if(user.role!=='author'){
+            navigate('/author/signup')
+        }
+    },[])
     return (
         <form onSubmit={(e) => {
             e.preventDefault()
