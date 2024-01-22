@@ -4,13 +4,72 @@ import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setRole, setUser } from '../../redux/reducers/authSlice'
+import Input from '../../components/Input'
+import Button from '../../components/Button'
+const formConfig = [
+  {
+    type: 'text',
+    dataKey: 'name',
+    isOptional: false,
+    placeholder: 'Full Name',
+  },
+  {
+    type: 'email',
+    dataKey: 'email',
+    isOptional: false,
+    placeholder: 'Email',
+  },
+  {
+    type: 'text',
+    dataKey: 'country',
+    isOptional: false,
+    placeholder: 'Country',
+  },
+  {
+    type: 'phone',
+    dataKey: 'phone',
+    isOptional: false,
+    placeholder: 'Phone Number',
+  },
+  {
+    type: 'text',
+    dataKey: 'organization',
+    isOptional: false,
+    placeholder: 'Organization (e.g. ABES Engineering College)',
+  },
+  {
+    type: 'text',
+    dataKey: 'designation',
+    isOptional: false,
+    placeholder: 'Designation (e.g. Head, Professor, etc)',
+  },
+  {
+    type: 'number',
+    dataKey: 'experience',
+    isOptional: false,
+    placeholder: 'Experience (e.g. 2 years)',
+  },
+  {
+    type: 'password',
+    dataKey: 'password',
+    isOptional: false,
+    placeholder: 'Password (min 6 letters)',
+  },
+  {
+    type: 'password',
+    dataKey: 'confirmpwd',
+    isOptional: false,
+    placeholder: 'Confirm Password',
+  },
+];
+
 function OrganizerSignup() {
     const [form, setForm] = useState({})
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    return (
-        <form onSubmit={(e) => {
+
+    const handleSubmit=(e) => {
             e.preventDefault()
             setLoading(true)
             organizerSignup(form, (res) => {
@@ -25,38 +84,35 @@ function OrganizerSignup() {
                 setLoading(false)
             })
 
-        }}>
-            <h1>Welcome Organizer</h1>
-            <input required={true} type="text" placeholder='Full Name' onChange={e => {
-                setForm({ ...form, name: e.target.value })
-            }} />
-            <input required={true} type="email" placeholder='Email' onChange={e => {
-                setForm({ ...form, email: e.target.value })
-            }} />
-            <input required={true} type="text" placeholder='Country' onChange={e => {
-                setForm({ ...form, country: e.target.value })
-            }} />
-            <input required={true} type="phone" placeholder='Phone Number' onChange={e => {
-                setForm({ ...form, phone: e.target.value })
-            }} />
-            <input required={true} type="text" placeholder='Organization (e.g. ABES Engineering College)' onChange={e => {
-                setForm({ ...form, organization: e.target.value })
-            }} />
-            <input required={true} type="text" placeholder='Designation (e.g. Head, Professor, etc)' onChange={e => {
-                setForm({ ...form, designation: e.target.value })
-            }} />
-            <input required={true} type="number" placeholder='Experience (e.g. 2 years) ' onChange={e => {
-                setForm({ ...form, experience: e.target.value })
-            }} />
-            <input required={true} type="password" placeholder='Password (min 6 letters) ' onChange={e => {
-                setForm({ ...form, password: e.target.value })
-            }} />
-            <input required={true} type="password" placeholder='Confirm Password ' onChange={e => {
-                setForm({ ...form, confirmpwd: e.target.value })
-            }} />
+        }
+    return (
+        <form onSubmit={handleSubmit} className='p-5'>
+            <div className='w-2/3 mx-auto'>
+                <h1>Welcome Organizer</h1>
+            
+                <div className='grid grid-cols-2 gap-5 my-5'>
+                    {
+                formConfig.map(item => {
+                    return <Input
+                        placeholder={item.placeholder}
+                        changeHandler={(val) => setForm({ ...form, [item.dataKey]: val })}
+                        type={item.type}
+                        extraClass='my-5'
+                        isOptional={item.isOptional}
+                    />
+                })
+            }
+                </div>
 
-            <button type='submit' disabled={!((form.password) && form.confirmpwd && form.password === form.confirmpwd)}>{(loading) ? 'Loading...' : 'Submit'}</button>
-            <p>Already have an Account, <Link to="/login">Login Now</Link></p>
+                <Button
+                    type='submit'
+                    text='Create Account'
+                    isLoading={loading}
+                    disabled={!((form.password) && form.confirmpwd && form.password === form.confirmpwd)}
+                />
+
+            <p className='my-3 text-md text-center'>Already have an Account, <Link className='text-purple-700 underline' to="/login">Login Now</Link></p>
+            </div>
         </form>
     )
 }

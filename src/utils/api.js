@@ -238,6 +238,7 @@ export const submitReview = (confId, paperId, newReview, userName, userEmail, ha
         })
     })
 }
+
 export const getReviewsById = async (id, handler, errHandler) => {
     const docRef = doc(db, 'conferences', id)
 

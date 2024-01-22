@@ -3,62 +3,115 @@ import { reviewerSignup } from '../../utils/api'
 import { useNavigate, Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setRole, setUser } from '../../redux/reducers/authSlice'
+import Input from '../../components/Input'
+import Button from '../../components/Button'
+const formConfig = [
+    {
+        type: 'text',
+        dataKey: 'name',
+        isOptional: false,
+        placeholder: 'Full Name',
+    },
+    {
+        type: 'email',
+        dataKey: 'email',
+        isOptional: false,
+        placeholder: 'Email',
+    },
+    {
+        type: 'text',
+        dataKey: 'country',
+        isOptional: false,
+        placeholder: 'Country',
+    },
+    {
+        type: 'phone',
+        dataKey: 'phone',
+        isOptional: false,
+        placeholder: 'Phone Number',
+    },
+    {
+        type: 'text',
+        dataKey: 'education',
+        isOptional: false,
+        placeholder: 'Education (e.g. Bachelors in Data Science)',
+    },
+    {
+        type: 'text',
+        dataKey: 'interest',
+        isOptional: false,
+        placeholder: 'Area of Interest (e.g. Machine Learning)',
+    },
+    {
+        type: 'number',
+        dataKey: 'experience',
+        isOptional: false,
+        placeholder: 'Experience (e.g. 2 years)',
+    },
+    {
+        type: 'password',
+        dataKey: 'password',
+        isOptional: false,
+        placeholder: 'Password (min 6 letters)',
+    },
+    {
+        type: 'password',
+        dataKey: 'confirmpwd',
+        isOptional: false,
+        placeholder: 'Confirm Password',
+    },
+];
+
 function ReviewerSignup() {
     const [form, setForm] = useState({})
     const navigate = useNavigate()
-    const [loading,setLoading]=useState(false)
-    const dispatch=useDispatch()
+    const [loading, setLoading] = useState(false)
+    const dispatch = useDispatch()
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        setLoading(true)
+        reviewerSignup(form, (res) => {
+            dispatch(setUser(form));
+            dispatch(setRole('reviewer'))
+            alert("Successfully Created Account")
+            setLoading(false)
+            navigate('/reviewer/home')
+        }, (err) => {
+            var msg = err.message.split('/')
+            alert(msg[msg.length - 1])
+            setLoading(false)
+        })
+    }
     return (
-
-        <div className="reviewerSignup">
-            <form onSubmit={(e) => {
-                e.preventDefault()
-                setLoading(true)
-                reviewerSignup(form,(res)=>{
-                    dispatch(setUser(form));
-                    dispatch(setRole('reviewer'))
-                    alert("Successfully Created Account")
-                    setLoading(false)
-                    navigate('/reviewer/home')
-                },(err)=>{
-                    var msg = err.message.split('/')
-                    alert(msg[msg.length - 1])
-                    setLoading(false)
-                })
-            }}>
+        <form onSubmit={handleSubmit} className='p-5'>
+            <div className='w-2/3 mx-auto'>
                 <h1>Welcome Reviewer</h1>
-                <input required={true} type="text" placeholder='Full Name' onChange={e => {
-                    setForm({ ...form, name: e.target.value })
-                }} />
-                <input required={true} type="email" placeholder='Email' onChange={e => {
-                    setForm({ ...form, email: e.target.value })
-                }} />
-                <input required={true} type="text" placeholder='Country' onChange={e => {
-                    setForm({ ...form, country: e.target.value })
-                }} />
-                <input required={true} type="phone" placeholder='Phone Number' onChange={e => {
-                    setForm({ ...form, phone: e.target.value })
-                }} />
-                <input required={true} type="text" placeholder='Education (e.g. Bachelors in Data Science)' onChange={e => {
-                    setForm({ ...form, education: e.target.value })
-                }} />
-                <input required={true} type="text" placeholder='Area of Interest (e.g. Machine Learning)' onChange={e => {
-                    setForm({ ...form, interest: e.target.value })
-                }} />
-                <input required={true} type="number" placeholder='Experience (e.g. 2 years) ' onChange={e => {
-                    setForm({ ...form, experience: e.target.value })
-                }} />
-                <input required={true} type="password" placeholder='Password (min 6 letters) ' onChange={e => {
-                    setForm({ ...form, password: e.target.value })
-                }} />
-                <input required={true} type="password" placeholder='Confirm Password ' onChange={e => {
-                    setForm({ ...form, confirmpwd: e.target.value })
-                }} />
 
-                <button type='submit' disabled={!((form.password) && form.confirmpwd && form.password === form.confirmpwd)}>{loading?'Loading...':'submit'}</button>
-                <p>Already have an Account, <Link to="/login">Login Now</Link></p>
-            </form>
-        </div>
+                <div className='grid grid-cols-2 gap-5 my-5'>
+                    {
+                        formConfig.map(item => {
+                            return <Input
+                                placeholder={item.placeholder}
+                                changeHandler={(val) => setForm({ ...form, [item.dataKey]: val })}
+                                type={item.type}
+                                extraClass='my-5'
+                                isOptional={item.isOptional}
+                            />
+                        })
+                    }
+                </div>
+
+                <Button
+                    type='submit'
+                    text='Create Account'
+                    isLoading={loading}
+                    disabled={!((form.password) && form.confirmpwd && form.password === form.confirmpwd)}
+                />
+
+                <p className='my-3 text-md text-center'>Already have an Account, <Link className='text-purple-700 underline' to="/login">Login Now</Link></p>
+            </div>
+        </form>
     )
 }
 

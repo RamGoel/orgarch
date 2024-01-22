@@ -1,53 +1,90 @@
 import React, { useState } from 'react'
-import { authorSignup, reviewerSignup } from '../../utils/api'
+import { authorSignup } from '../../utils/api'
 import { useNavigate, Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setRole, setUser } from '../../redux/reducers/authSlice'
+import Input from '../../components/Input'
+
 function AuthorSignup() {
     const [form, setForm] = useState({})
     const navigate = useNavigate()
-    const [loading,setLoading]=useState(false)
-    const dispatch=useDispatch()
+    const [loading, setLoading] = useState(false)
+    const dispatch = useDispatch()
+    const formConfig = [
+        {
+            type: 'text',
+            dataKey: 'name',
+            changeHandler: (val) => setForm({ ...form, name: val }),
+            placeholder: 'Full Name',
+        },
+        {
+            type: 'email',
+            dataKey: 'email',
+            changeHandler: (val) => setForm({ ...form, email: val }),
+            placeholder: 'Email',
+        },
+        {
+            type: 'text',
+            dataKey: 'country',
+            changeHandler: (val) => setForm({ ...form, country: val }),
+            placeholder: 'Country',
+        },
+        {
+            type: 'phone',
+            dataKey: 'phone',
+            changeHandler: (val) => setForm({ ...form, phone: val }),
+            placeholder: 'Phone Number',
+        },
+        {
+            type: 'text',
+            dataKey: 'education',
+            changeHandler: (val) => setForm({ ...form, education: val }),
+            placeholder: 'Education (e.g. Bachelors in Data Science)',
+        },
+        {
+            type: 'text',
+            dataKey: 'interest',
+            changeHandler: (val) => setForm({ ...form, interest: val }),
+            placeholder: 'Area of Interest (e.g. Machine Learning)',
+        },
+        {
+            type: 'password',
+            dataKey: 'password',
+            changeHandler: (val) => setForm({ ...form, password: val }),
+            placeholder: 'Password (min 6 letters)',
+        },
+    ];
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        setLoading(true)
+        authorSignup(form, (res) => {
+            dispatch(setUser(form));
+            dispatch(setRole('author'))
+            setLoading(false)
+            navigate('/author/home')
+        }, (err) => {
+            var msg = err.message.split('/')
+            alert(msg[msg.length - 1])
+            setLoading(false)
+        })
+    }
+
     return (
 
         <div className="reviewerSignup">
-            <form onSubmit={(e) => {
-                e.preventDefault()
-                setLoading(true)
-                authorSignup(form,(res)=>{
-                    dispatch(setUser(form));
-                    dispatch(setRole('author'))
-                    setLoading(false)
-                    navigate('/author/home')
-                },(err)=>{
-                    var msg = err.message.split('/')
-                    alert(msg[msg.length - 1])
-                    setLoading(false)
-                })
-            }}>
+            <form onSubmit={handleSubmit}>
                 <h1>Welcome Author</h1>
-                <input required={true} type="text" placeholder='Full Name' onChange={e => {
-                    setForm({ ...form, name: e.target.value })
-                }} />
-                <input required={true} type="email" placeholder='Email' onChange={e => {
-                    setForm({ ...form, email: e.target.value })
-                }} />
-                <input required={true} type="text" placeholder='Country' onChange={e => {
-                    setForm({ ...form, country: e.target.value })
-                }} />
-                <input required={true} type="phone" placeholder='Phone Number' onChange={e => {
-                    setForm({ ...form, phone: e.target.value })
-                }} />
-                <input required={true} type="text" placeholder='Education (e.g. Bachelors in Data Science)' onChange={e => {
-                    setForm({ ...form, education: e.target.value })
-                }} />
-                <input required={true} type="text" placeholder='Area of Interest (e.g. Machine Learning)' onChange={e => {
-                    setForm({ ...form, interest: e.target.value })
-                }} />
-                <input required={true} type="password" placeholder='Password (min 6 letters) ' onChange={e => {
-                    setForm({ ...form, password: e.target.value })
-                }} />
-                <button type='submit' disabled={!(form.password)}>{loading?'Loading...':'submit'}</button>
+                {formConfig.map((field, index) => (
+                    <Input
+                        key={index}
+                        type={field.type}
+                        changeHandler={field.changeHandler}
+                        placeholder={field.placeholder}
+                    />
+                ))}
+
+                <button type='submit' disabled={!(form.password)}>{loading ? 'Loading...' : 'submit'}</button>
                 <p>Already have an Account, <Link to="/login">Login Now</Link></p>
             </form>
         </div>

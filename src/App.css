@@ -4,7 +4,7 @@
 }
 
 
-input{
+/* input{
   display: block;
   padding: 10px;
   margin:10px 0px;
@@ -43,7 +43,7 @@ td, th{
   width: 18vw;
   text-align: center;
   border: .5px solid black ;
-}
+} */
 /* ------------------ for navbar -------------- */
 .header {
   min-height: 100vh;

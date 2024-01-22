@@ -5,18 +5,19 @@ import { useNavigate } from 'react-router-dom'
 import Loader from '../../components/Loader'
 import { useDispatch } from 'react-redux'
 import { setRole, setUser } from '../../redux/reducers/authSlice'
+import Input from '../../components/Input'
+import Button from '../../components/Button'
 function Login() {
   const [email, setEmail] = useState('')
   const [password, setPwd] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
   if (loading) { return <Loader /> }
-  return (
-    <div className="login">
-      <img src="https://www.claymath.org/sites/default/files/img_3093_0.jpg" width={'50%'} alt="" />
-      <form onSubmit={e => {
-        e.preventDefault()
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
         setLoading(true)
         loginUser({ email, password }, (user) => {
           dispatch(setUser(user));
@@ -28,12 +29,24 @@ function Login() {
           alert(msg[msg.length - 1])
           setLoading(false)
         }))
-      }}>
+  }
+  return (
+    <div className="login">
+      <img src="https://i.pinimg.com/originals/d1/54/66/d154660a6ae3104de2b0a314667a5ab6.png" width={'40%'} alt="" />
+      <form onSubmit={handleSubmit}>
         <h1>Login</h1>
-        <input type="email" required={true} onChange={e => setEmail(e.target.value)} placeholder='email'></input>
-        <input type="password" required={true} onChange={e => setPwd(e.target.value)} placeholder='password'></input>
-        <button type="submit">{(loading) ? 'Loading....' : 'Submit'}</button>
-        <p>Don't have an Account <Link to='/'>Create one</Link></p>
+        <Input
+          type='email'
+          changeHandler={setEmail}
+          placeholder='Email'
+        />
+        <Input
+          type='password'
+          changeHandler={setPwd}
+          placeholder='Password'
+        />
+        <Button text='Submit' isLoading={loading} type='submit'/>
+        <p className='my-3 text-md text-center'>Don't have an Account <Link className='text-purple-700 underline' to='/'>Create one</Link></p>
       </form>
     </div>
   )
