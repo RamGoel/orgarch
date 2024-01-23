@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux'
 import { setRole, setUser } from '../../redux/reducers/authSlice'
 import Input from '../../components/Input'
 import Button from '../../components/Button'
+import { toast } from 'react-toastify';
+
 const formConfig = [
   {
     type: 'text',
@@ -80,7 +82,7 @@ function OrganizerSignup() {
                 navigate('/organizer/home')
             }, (err) => {
                 var msg = err.message.split('/')
-                alert(msg[msg.length - 1])
+                toast(msg[msg.length - 1])
                 setLoading(false)
             })
 

@@ -18,12 +18,15 @@ function AllConferences() {
         })
 
     }, [])
+    if (loading) {
+        return <Loader />
+    }
     return (
-        loading ? <Loader /> : <div>
+        <div>
             {
-                data.length?data.map(e => {
-                    return <ConferenceCard data={e} /> 
-                }):<NoDataPage message={'No conferences are scheduled'} />
+                data.length ? data.map(e => {
+                    return <ConferenceCard data={e} />
+                }) : <NoDataPage message={'No conferences are scheduled'} />
             }
         </div>
     )

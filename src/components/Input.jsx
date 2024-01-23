@@ -8,14 +8,16 @@ const Input = ({
     placeholder = '',
 }) => {
     return (
-        <input
-          type={type}
-          className={'p-2 py-3 border-2 rounded-lg w-full text-black placeholder:text-black border-black my-3'+ extraClass}
-          required={!isOptional}
-          onChange={(e)=>changeHandler(e.target.value)}
-          placeholder={placeholder}
-        />
-  )
+        <div className='my-3 w-full'>
+            <label className='font-semibold mb-2'>{placeholder}:</label>
+            <input
+                type={type}
+                className={'p-2 py-3 border-2 rounded-lg w-full text-black placeholder:text-black border-black my-1' + extraClass}
+                required={!isOptional}
+                onChange={(e) => changeHandler(e.target.value)}
+            />
+        </div>
+    )
 }
 
 export default Input

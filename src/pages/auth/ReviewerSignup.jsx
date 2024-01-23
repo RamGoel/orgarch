@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux'
 import { setRole, setUser } from '../../redux/reducers/authSlice'
 import Input from '../../components/Input'
 import Button from '../../components/Button'
+import { toast } from 'react-toastify';
+
 const formConfig = [
     {
         type: 'text',
@@ -74,21 +76,21 @@ function ReviewerSignup() {
         reviewerSignup(form, (res) => {
             dispatch(setUser(form));
             dispatch(setRole('reviewer'))
-            alert("Successfully Created Account")
+            toast("Successfully Created Account")
             setLoading(false)
             navigate('/reviewer/home')
         }, (err) => {
             var msg = err.message.split('/')
-            alert(msg[msg.length - 1])
+            toast(msg[msg.length - 1])
             setLoading(false)
         })
     }
     return (
         <form onSubmit={handleSubmit} className='p-5'>
-            <div className='w-2/3 mx-auto'>
+            <div className='w-11/12 md:w-2/3 mx-auto'>
                 <h1>Welcome Reviewer</h1>
 
-                <div className='grid grid-cols-2 gap-5 my-5'>
+                <div className='grid grid-cols-1 md:grid-cols-2 md:gap-5 '>
                     {
                         formConfig.map(item => {
                             return <Input

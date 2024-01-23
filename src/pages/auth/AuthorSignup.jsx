@@ -4,7 +4,8 @@ import { useNavigate, Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setRole, setUser } from '../../redux/reducers/authSlice'
 import Input from '../../components/Input'
-
+import Button from '../../components/Button'
+import {toast} from 'react-toastify'
 function AuthorSignup() {
     const [form, setForm] = useState({})
     const navigate = useNavigate()
@@ -65,7 +66,7 @@ function AuthorSignup() {
             navigate('/author/home')
         }, (err) => {
             var msg = err.message.split('/')
-            alert(msg[msg.length - 1])
+            toast(msg[msg.length - 1])
             setLoading(false)
         })
     }
@@ -75,7 +76,8 @@ function AuthorSignup() {
         <div className="reviewerSignup">
             <form onSubmit={handleSubmit}>
                 <h1>Welcome Author</h1>
-                {formConfig.map((field, index) => (
+                <div className='grid-cols-1 grid md:grid-cols-2 gap-3'>
+                    {formConfig.map((field, index) => (
                     <Input
                         key={index}
                         type={field.type}
@@ -83,9 +85,10 @@ function AuthorSignup() {
                         placeholder={field.placeholder}
                     />
                 ))}
+                </div>
 
-                <button type='submit' disabled={!(form.password)}>{loading ? 'Loading...' : 'submit'}</button>
-                <p>Already have an Account, <Link to="/login">Login Now</Link></p>
+                <Button text='Submit' isLoading={loading} type='submit' disabled={!(form.password)}/>
+                <p className='my-3 text-md text-center'>Already have an Account, <Link className='text-purple-700 underline' to="/login">Login Now</Link></p>
             </form>
         </div>
     )

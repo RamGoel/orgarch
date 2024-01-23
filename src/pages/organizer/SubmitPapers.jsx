@@ -3,6 +3,47 @@ import { submitPaper } from '../../utils/api'
 import { useNavigate, useParams } from 'react-router'
 import { getErrMessage } from '../../utils/plugins'
 import { useSelector } from 'react-redux'
+import Input from '../../components/Input'
+import Button from '../../components/Button'
+import {toast} from 'react-toastify'
+const formConfig = [
+  {
+    type: 'text',
+    dataKey: 'name',
+    isOptional: false,
+    placeholder: 'Full Name',
+  },
+  {
+    type: 'text',
+    dataKey: 'org',
+    isOptional: false,
+    placeholder: 'College/Organization',
+  },
+  {
+    type: 'text',
+    dataKey: 'title',
+    isOptional: false,
+    placeholder: 'Title',
+  },
+  {
+    type: 'text',
+    dataKey: 'abstract',
+    isOptional: false,
+    placeholder: 'Abstract',
+  },
+  {
+    type: 'text',
+    dataKey: 'tags',
+    isOptional: false,
+    placeholder: 'Tags',
+  },
+  {
+    type: 'file',
+    dataKey: 'file',
+    isOptional: false,
+    placeholder: 'Choose File',
+  },
+];
 
 function SubmitPapers({ data }) {
     const [form, setForm] = useState()
@@ -18,40 +59,42 @@ function SubmitPapers({ data }) {
         if(user.role!=='author'){
             navigate('/author/signup')
         }
-    },[])
-    return (
-        <form onSubmit={(e) => {
+    }, [])
+    
+
+    const handleSubmit = (e) => {
             e.preventDefault()
             setLoading(true)
-            submitPaper(id, form, (res) => {
-                console.log(res)
+        submitPaper(id, form, (res) => {
+                toast('Added Paper Successfully')
                 setLoading(false)
                 navigate(`/conference/${id}/papers`)
             }, err => {
-                alert(getErrMessage(err))
+                toast(getErrMessage(err))
                 setLoading(false)
             })
-        }}>
-            <input required={true} type="text" placeholder='Full Name' onChange={e => {
-                setForm({ ...form, name: e.target.value })
-            }} />
-            <input required={true} type="text" placeholder='College/Organization' onChange={e => {
-                setForm({ ...form, org: e.target.value })
-            }} />
-            <input required={true} type="text" placeholder='Title' onChange={e => {
-                setForm({ ...form, title: e.target.value })
-            }} />
-            <input required={true} type="text" placeholder='Abstract' onChange={e => {
-                setForm({ ...form, abstract: e.target.value })
-            }} />
-            <input required={true} type="text" placeholder='Tags' onChange={e => {
-                setForm({ ...form, tags: e.target.value })
-            }} />
-            <input required={true} type="file" onChange={e => {
-                setForm({ ...form, file: e.target.files[0] })
-            }} />
+        }
+    return (
+        <form onSubmit={handleSubmit} className='w-screen h-screen flex items-center justify-center mx-auto'>
+            <div className='w-1/2'>
+                <h1>Fill your Paper details.</h1>
+            {
+                formConfig.map((item) => {
+                    return <Input
+                        isOptional={item.isOptional}
+                        changeHandler={(val) => setForm({ ...form, [item.dataKey]: val })}
+                        type={item.type}
+                        placeholder={item.placeholder}
+                    />
+                })
+            }
 
-            <button>{loading ? 'Loading...' : 'Submit'}</button>
+            <Button
+                isLoading={loading}
+                isDisabled={loading}
+                text="Submit"
+            />
+            </div>
         </form>
     )
 }

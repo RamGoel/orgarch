@@ -15,8 +15,8 @@ export default function Home() {
              that feel like real</p>
              <p class="max-w-lg text-center text-darkGrayishBlue md:text-left">
              Smart Review is a cutting-edge review system designed to revolutionize the evaluation process for research papers. Leveraging advanced technologies and intelligent algorithms, Smart Review aims to streamline and enhance the peer review process, ensuring rigorous assessment and valuable feedback for researchers worldwide.             </p>
-             <div class="flex justify-center md:justify-start">
-                <a href="sus" class="p-3 px-6 pt-2 text-white a-colour rounded-full baseline hover:a-colourLight">Let's connect.</a>
+             <div class="p-2 bg-black w-[200px] text-center text-white rounded-full">
+                <a href="/role" class="">Get Started </a> <i className='fa fa-arrow-right' />
              </div>
         </div>
         <div class="md:w-1/2">

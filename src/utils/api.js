@@ -136,7 +136,6 @@ export const submitPaper = (confId, newPaper, handler, errHandler) => {
                 })
             })
 
-            alert("Added Paper")
             handler("success")
         }
     );

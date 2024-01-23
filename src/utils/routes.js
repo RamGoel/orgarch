@@ -14,11 +14,16 @@ import AddReview from '../pages/reviewer/AddReview';
 import ConferenceReviews from '../pages/reviewer/ConferenceReviews';
 import AuthorSignup from '../pages/auth/AuthorSignup';
 import AuthorHome from '../components/AuthorHome';
+import ChooseRole from '../components/ChooseRole';
 
 export const Router = createBrowserRouter([
     {
         element: <Role />,
         path: '/',
+    },
+    {
+        element: <ChooseRole />,
+        path: '/role',
     },
     {
         element: <Login />,

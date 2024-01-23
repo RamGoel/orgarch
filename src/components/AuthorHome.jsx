@@ -8,8 +8,8 @@ import { useSelector } from 'react-redux'
 function AuthorHome() {
     const [data, setData] = useState([true])
     const [loading, setLoading] = useState(false)
-    const user=useSelector(state=>state.auth.user)
-    
+    const user = useSelector(state => state.auth.user)
+
     useEffect(e => {
         console.log(user.role)
         setLoading(true)
@@ -23,11 +23,17 @@ function AuthorHome() {
 
     }, [])
     return (
-        loading ? <Loader /> : <div>
+        loading ? <Loader /> : <div className='w-11/12 mx-auto mt-12'>
+            <h3 className='text-2xl font-semibold'>Open Conferences</h3>
+
             {
-                data.length?data.map(e => {
-                    return <ConferenceCard data={e} /> 
-                }):<NoDataPage message={'No conferences are scheduled'} />
+                data.length ? <div className='grid grid-cols-3 gap-5'>
+                    {
+                        data.map(e => {
+                            return <ConferenceCard data={e} />
+                        })
+                    }
+                </div> : <NoDataPage message={'No conferences are scheduled'} />
             }
         </div>
     )
