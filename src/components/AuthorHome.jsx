@@ -21,7 +21,7 @@ function AuthorHome() {
             alert(getErrMessage(err))
         })
 
-    }, [])
+    }, [user.role])
     return (
         loading ? <Loader /> : <div className='w-11/12 mx-auto mt-12'>
             <h3 className='text-2xl font-semibold'>Open Conferences</h3>

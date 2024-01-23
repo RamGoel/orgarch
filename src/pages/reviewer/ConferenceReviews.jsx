@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {getReviewsById } from '../../utils/api'
-import { useLocation, useParams } from 'react-router'
+import { useLocation } from 'react-router'
 import Loader from '../../components/Loader'
 import NoDataPage from '../../components/NoData'
 import { toast } from 'react-toastify'
@@ -26,7 +26,7 @@ function ConferenceReviews() {
             toast(err)
             setLoading(false)
         })
-    }, [])
+    }, [confId, paperId])
 
     if (loading) {
         return <Loader />

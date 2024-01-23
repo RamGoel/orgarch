@@ -59,7 +59,7 @@ function SubmitPapers({ data }) {
         if(user.role!=='author'){
             navigate('/author/signup')
         }
-    }, [])
+    }, [navigate, user.role])
     
 
     const handleSubmit = (e) => {

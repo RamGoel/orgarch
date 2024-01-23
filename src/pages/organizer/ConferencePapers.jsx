@@ -29,7 +29,7 @@ function ConferencePapers() {
             setLoading(false)
         })
 
-    }, [])
+    }, [id])
 
     if (loading) {
         return <Loader />
