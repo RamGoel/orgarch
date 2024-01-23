@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const NotFoundPage = () => {
   return (
@@ -6,8 +7,7 @@ const NotFoundPage = () => {
       <h1>404</h1>
       <h2>Page Not Found</h2>
       <p>We're sorry, but the page you are looking for does not exist.</p>
-      {/* <img src="/path/to/error-image.png" alt="Error" className="error-image" /> */}
-      <p>Please check the URL or go back to the <a href="/">homepage</a>.</p>
+      <p>Please check the URL or go back to the <Link to="/">homepage</Link>.</p>
       <style jsx>{`
         .not-found-container {
           display: flex;

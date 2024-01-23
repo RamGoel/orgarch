@@ -2,6 +2,7 @@ import React from 'react'
 import '../App.css'
 import '../index.css'
 import logo from '../assets/logo.png'
+import { Link } from 'react-router-dom'
 
 export default function Navbar() {
   return (
@@ -11,9 +12,9 @@ export default function Navbar() {
           <div class="pt-2 logo-div">
             <img src={logo} alt="" class="logo-img" />
           </div>
-          <a href="https://linkedin.com/in/ramgoel" class="flex items-center text-xs py-2 justify-between border-2 rounded-full px-4 border-black text-white bg-black">
+          <Link to="https://linkedin.com/in/ramgoel" class="flex items-center text-xs py-2 justify-between border-2 rounded-full px-4 border-black text-white bg-black">
             Designed & Developed by Ram Goel <i className='fab fa-linkedin ml-2 ' />
-          </a>
+          </Link>
         </div>
 
       </nav>

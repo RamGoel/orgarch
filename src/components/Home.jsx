@@ -1,5 +1,6 @@
 import React from 'react'
 import chairs from '../assets/emptyChairs.png'
+import { Link } from 'react-router-dom'
 
 export default function Home() {
   return (
@@ -16,7 +17,7 @@ export default function Home() {
              <p class="max-w-lg text-center text-darkGrayishBlue md:text-left">
              Smart Review is a cutting-edge review system designed to revolutionize the evaluation process for research papers. Leveraging advanced technologies and intelligent algorithms, Smart Review aims to streamline and enhance the peer review process, ensuring rigorous assessment and valuable feedback for researchers worldwide.             </p>
              <div class="p-2 bg-black w-[200px] text-center text-white rounded-full">
-                <a href="/role" class="">Get Started </a> <i className='fa fa-arrow-right' />
+                <Link to="/role" class="">Get Started </Link> <i className='fa fa-arrow-right' />
              </div>
         </div>
         <div class="md:w-1/2">

@@ -56,7 +56,7 @@ function ConferencePapers() {
                             <td className='p-2 w-1/5 border-2 text-center'>{paper.abstract.substring(0,100)}...</td>
                             <td className='p-2 w-1/5 border-2 text-center'>{paper.name}</td>
                             <td className='p-2 w-1/5 border-2 text-center'>{paper.org}</td>
-                            <td className='p-2 flex-1 border-2 text-center'><a className='text-blue-500 underline' href={paper.file}>View Paper</a></td>
+                            <td className='p-2 flex-1 border-2 text-center'><Link className='text-blue-500 underline' to={paper.file}>View Paper</Link></td>
                             <td className='p-2 flex-1 border-2 text-center'>{user.role === 'organizer' ? <select className='p-2 border-2 m-2' onChange={(e) => {
                                 setLoading(true)
                                 assignReviewer(e.target.value, paper.id, paper.confId, (res) => {
